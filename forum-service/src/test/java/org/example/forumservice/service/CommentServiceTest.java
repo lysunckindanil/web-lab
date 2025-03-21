@@ -12,10 +12,7 @@ import org.example.forumservice.repo.IssueRepository;
 import org.example.forumservice.repo.RoleRepository;
 import org.example.forumservice.repo.UserRepository;
 import org.example.forumservice.util.BadRequestException;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -41,12 +38,8 @@ class CommentServiceTest {
     @Autowired
     private IssueRepository issueRepository;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
-        commentRepository.deleteAll();
-        issueRepository.deleteAll();
-        userRepository.deleteAll();
-        roleRepository.deleteAll();
         User user = new User();
         user.setUsername("user");
         user.setPassword("secret");
@@ -59,6 +52,20 @@ class CommentServiceTest {
         redactor.setPassword("secret");
         redactor.setRoles(List.of(role));
         userRepository.save(redactor);
+
+        Role role2 = new Role("ROLE_ADMIN");
+        roleRepository.save(role2);
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setPassword("secret");
+        admin.setRoles(List.of(role2));
+        userRepository.save(admin);
+    }
+
+    @BeforeEach
+    public void cleanUp() {
+        commentRepository.deleteAll();
+        issueRepository.deleteAll();
     }
 
 
@@ -89,7 +96,7 @@ class CommentServiceTest {
     }
 
     @Test
-    void createComment() {
+    void createComment_IssueAndAuthorExist_Creates() {
         Issue issue = new Issue();
         issueRepository.save(issue);
         User user = userRepository.findByUsername("user").get();
@@ -125,7 +132,7 @@ class CommentServiceTest {
     }
 
     @Test
-    void deleteComment_EqualAuthor_Deletes() {
+    void deleteComment_PretenderIsAuthor_Deletes() {
         User user = userRepository.findByUsername("user").get();
         userRepository.save(user);
         Comment comment = new Comment();
@@ -138,7 +145,7 @@ class CommentServiceTest {
     }
 
     @Test
-    void deleteComment_Redactor_deletes() {
+    void deleteComment_PretenderIsRedactor_Deletes() {
         User user = userRepository.findByUsername("user").get();
         Comment comment = new Comment();
         comment.setAuthor(user);
@@ -150,6 +157,35 @@ class CommentServiceTest {
                 .build());
         Assertions.assertEquals(0, commentRepository.count());
     }
+
+    @Test
+    void deleteComment_PretenderIsAdmin_Deletes() {
+        User user = userRepository.findByUsername("user").get();
+        Comment comment = new Comment();
+        comment.setAuthor(user);
+        commentRepository.save(comment);
+
+        commentService.deleteComment(DeleteCommentDto.builder()
+                .commentId(comment.getId())
+                .username("admin")
+                .build());
+        Assertions.assertEquals(0, commentRepository.count());
+    }
+
+    @Test
+    void deleteComment_PretenderIsNotAuthorOrRedactorOrAdmin_ThrowsException() {
+        User user = userRepository.findByUsername("redactor").get();
+        Comment comment = new Comment();
+        comment.setAuthor(user);
+        commentRepository.save(comment);
+
+        Assertions.assertThrows(BadRequestException.class, () -> commentService.deleteComment(DeleteCommentDto.builder()
+                .commentId(comment.getId())
+                .username("user")
+                .build()));
+        Assertions.assertEquals(1, commentRepository.count());
+    }
+
 
     @Test
     void deleteComment_UserNotFound_ThrowsException() {
@@ -171,33 +207,6 @@ class CommentServiceTest {
                         .commentId(1L)
                         .username("user")
                         .build()));
-    }
-
-    @Test
-    void deleteComment_EqualAuthor_NoThrowsException() {
-        User user = userRepository.findByUsername("user").get();
-        Comment comment = new Comment();
-        comment.setAuthor(user);
-        commentRepository.save(comment);
-
-        Assertions.assertDoesNotThrow(
-                () -> commentService.deleteComment(DeleteCommentDto.builder()
-                        .commentId(comment.getId())
-                        .username("user")
-                        .build()));
-    }
-
-    @Test
-    void deleteComment_AuthorRedactor_NoThrowsException() {
-        User user = userRepository.findByUsername("user").get();
-        Comment comment = new Comment();
-        comment.setAuthor(user);
-        commentRepository.save(comment);
-
-        Assertions.assertDoesNotThrow(
-                () -> commentService.deleteComment(DeleteCommentDto.builder()
-                        .commentId(comment.getId())
-                        .username("redactor").build()));
     }
 
 

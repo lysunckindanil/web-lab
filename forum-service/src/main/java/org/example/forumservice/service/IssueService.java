@@ -46,9 +46,9 @@ public class IssueService {
 
     @Transactional
     public void deleteIssue(DeleteIssueDto dto) {
-        Optional<Issue> issueOptional = issueRepository.findById(dto.getId());
+        Optional<Issue> issueOptional = issueRepository.findById(dto.getIssueId());
         if (issueOptional.isEmpty()) throw new BadRequestException("Issue doesn't exist");
-        Optional<User> userOptional = userService.findByUsername(dto.getAuthor());
+        Optional<User> userOptional = userService.findByUsername(dto.getUsername());
         if (userOptional.isEmpty()) throw new BadRequestException("Author doesn't exist");
         User user = userOptional.get();
 
