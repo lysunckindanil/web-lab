@@ -3,6 +3,7 @@ package org.example.forumservice.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -13,14 +14,18 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "id")
     private Long id;
 
+    @Column(nullable = false, name = "content")
     private String content;
-    @Column(updatable = false)
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
     private LocalDateTime createdAt;
     @ManyToOne
+    @JoinColumn(nullable = false, name = "author_id")
     private User author;
     @ManyToOne
+    @JoinColumn(nullable = false, name = "issue_id")
     private Issue issue;
 }

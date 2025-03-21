@@ -35,7 +35,7 @@ public class CommentController {
     public ResponseEntity<Void> createComment(@Valid @RequestBody CreateCommentDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
-        commentService.createComment(dto);
+        commentService.create(dto);
         return ResponseEntity.noContent().build();
     }
 
@@ -43,7 +43,7 @@ public class CommentController {
     public ResponseEntity<Void> deleteComment(@Valid @RequestBody DeleteCommentDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
-        commentService.deleteComment(dto);
+        commentService.delete(dto);
         return ResponseEntity.noContent().build();
     }
 

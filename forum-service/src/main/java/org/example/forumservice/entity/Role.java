@@ -16,8 +16,9 @@ import java.util.Objects;
 public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "id")
     private Long id;
+    @Column(nullable = false, name = "name")
     private String name;
 
     @Override

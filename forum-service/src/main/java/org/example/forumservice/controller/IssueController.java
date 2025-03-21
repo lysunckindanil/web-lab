@@ -22,14 +22,14 @@ public class IssueController {
 
     @GetMapping
     public List<IssueDto> getIssues() {
-        return issueService.getAll().stream().map(IssueController::toIssueDto).toList();
+        return issueService.findAll().stream().map(IssueController::toIssueDto).toList();
     }
 
     @PostMapping("/create")
     public ResponseEntity<Void> deleteIssue(@Valid @RequestBody CreateIssueDto issueDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
-        issueService.createIssue(issueDto);
+        issueService.create(issueDto);
         return ResponseEntity.noContent().build();
     }
 
@@ -37,7 +37,7 @@ public class IssueController {
     public ResponseEntity<Void> deleteIssue(@Valid @RequestBody DeleteIssueDto deleteIssueDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
-        issueService.deleteIssue(deleteIssueDto);
+        issueService.delete(deleteIssueDto);
         return ResponseEntity.noContent().build();
     }
 

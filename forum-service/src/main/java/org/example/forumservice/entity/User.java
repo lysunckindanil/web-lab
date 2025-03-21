@@ -15,17 +15,21 @@ import java.util.List;
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "id")
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(updatable = false, nullable = false, unique = true, name = "username")
     String username;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "password")
     String password;
-    @Column(nullable = false)
+    @Column(nullable = false, name = "enabled")
     Boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = {
+                    @JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
     List<Role> roles = new ArrayList<>();
-
 }
