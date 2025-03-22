@@ -1,9 +1,9 @@
 package org.example.forumservice.dto.comment;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.example.forumservice.util.issue.IssueExists;
 
 import java.io.Serializable;
 
@@ -11,6 +11,6 @@ import java.io.Serializable;
 @Getter
 @AllArgsConstructor
 public class GetByIssueDto implements Serializable {
-    @NotNull
+    @IssueExists
     private final Long issueId;
 }

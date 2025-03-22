@@ -1,4 +1,4 @@
-package org.example.forumservice.service;
+package org.example.forumservice.service.issue;
 
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;

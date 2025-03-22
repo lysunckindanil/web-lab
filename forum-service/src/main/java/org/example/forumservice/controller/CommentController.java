@@ -7,7 +7,7 @@ import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
 import org.example.forumservice.dto.comment.GetByIssueDto;
 import org.example.forumservice.model.Comment;
-import org.example.forumservice.service.CommentService;
+import org.example.forumservice.service.comment.CommentService;
 import org.example.forumservice.util.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -32,7 +32,7 @@ public class CommentController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createComment(@Valid @RequestBody CreateCommentDto dto, BindingResult bindingResult) {
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateCommentDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
         commentService.create(dto);
@@ -40,7 +40,7 @@ public class CommentController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<Void> deleteComment(@Valid @RequestBody DeleteCommentDto dto, BindingResult bindingResult) {
+    public ResponseEntity<Void> delete(@Valid @RequestBody DeleteCommentDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
         commentService.delete(dto);

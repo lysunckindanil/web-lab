@@ -1,4 +1,4 @@
-package org.example.forumservice.service;
+package org.example.forumservice.service.comment;
 
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;

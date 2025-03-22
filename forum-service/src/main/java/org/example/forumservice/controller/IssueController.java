@@ -6,7 +6,7 @@ import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
 import org.example.forumservice.dto.issue.IssueDto;
 import org.example.forumservice.model.Issue;
-import org.example.forumservice.service.IssueService;
+import org.example.forumservice.service.issue.IssueService;
 import org.example.forumservice.util.BadRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -26,7 +26,7 @@ public class IssueController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> deleteIssue(@Valid @RequestBody CreateIssueDto issueDto, BindingResult bindingResult) {
+    public ResponseEntity<Void> create(@Valid @RequestBody CreateIssueDto issueDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
         issueService.create(issueDto);
@@ -34,7 +34,7 @@ public class IssueController {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<Void> deleteIssue(@Valid @RequestBody DeleteIssueDto deleteIssueDto, BindingResult bindingResult) {
+    public ResponseEntity<Void> delete(@Valid @RequestBody DeleteIssueDto deleteIssueDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
         issueService.delete(deleteIssueDto);

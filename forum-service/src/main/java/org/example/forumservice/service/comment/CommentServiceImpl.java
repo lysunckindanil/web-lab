@@ -1,4 +1,4 @@
-package org.example.forumservice.service;
+package org.example.forumservice.service.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.example.forumservice.dto.comment.CreateCommentDto;
@@ -9,6 +9,8 @@ import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.Role;
 import org.example.forumservice.model.User;
 import org.example.forumservice.repo.CommentRepository;
+import org.example.forumservice.service.issue.IssueService;
+import org.example.forumservice.service.user.UserService;
 import org.example.forumservice.util.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -16,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,9 +29,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<Comment> getByIssue(GetByIssueDto dto) {
-        Optional<Issue> issueOptional = issueService.findById(dto.getIssueId());
-        if (issueOptional.isEmpty()) throw new BadRequestException("Issue doesn't exist");
-        return commentRepository.getByIssue(issueOptional.get());
+        return commentRepository.getByIssue(issueService.findById(dto.getIssueId()).get());
     }
 
     @Transactional
@@ -39,29 +38,24 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
 
-        Optional<Issue> issueOptional = issueService.findById(dto.getIssueId());
-        if (issueOptional.isEmpty()) throw new BadRequestException("Issue doesn't exist");
-        Optional<User> userOptional = userService.findByUsername(dto.getAuthorUsername());
-        if (userOptional.isEmpty()) throw new BadRequestException("User doesn't exist");
+        Issue issue = issueService.findById(dto.getIssueId()).get();
+        User user = userService.findByUsername(dto.getAuthorUsername()).get();
 
-        comment.setIssue(issueOptional.get());
-        comment.setAuthor(userOptional.get());
+        comment.setIssue(issue);
+        comment.setAuthor(user);
         commentRepository.save(comment);
     }
 
     @Transactional
     @Override
     public void delete(DeleteCommentDto dto) {
-        Optional<Comment> commentOptional = commentRepository.findById(dto.getCommentId());
-        if (commentOptional.isEmpty()) throw new BadRequestException("Comment doesn't exist");
-        Optional<User> userOptional = userService.findByUsername(dto.getUsername());
-        if (userOptional.isEmpty()) throw new BadRequestException("User doesn't exist");
+        Comment comment = commentRepository.findById(dto.getCommentId()).get();
 
-        User user = userOptional.get();
-        if (commentOptional.get().getAuthor().equals(user)) {
-            commentRepository.delete(commentOptional.get());
+        User user = userService.findByUsername(dto.getUsername()).get();
+        if (comment.getAuthor().equals(user)) {
+            commentRepository.delete(comment);
         } else if (user.getRoles().stream().map(Role::getName).anyMatch(role -> role.equals("ROLE_REDACTOR") || role.equals("ROLE_ADMIN"))) {
-            commentRepository.delete(commentOptional.get());
+            commentRepository.delete(comment);
         } else {
             throw new BadRequestException("Forbidden to delete comment");
         }
@@ -70,9 +64,8 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public void deleteAllByIssue(Long issueId) {
-        Optional<Issue> issueOptional = issueService.findById(issueId);
-        if (issueOptional.isEmpty()) throw new BadRequestException("Issue doesn't exist");
-        commentRepository.deleteAll(commentRepository.getByIssue(issueOptional.get()));
+        Issue issue = issueService.findById(issueId).get();
+        commentRepository.deleteAll(commentRepository.getByIssue(issue));
     }
 
     @Autowired

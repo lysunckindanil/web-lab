@@ -1,4 +1,4 @@
-package org.example.forumservice.service;
+package org.example.forumservice.service.user;
 
 import org.example.forumservice.model.User;
 

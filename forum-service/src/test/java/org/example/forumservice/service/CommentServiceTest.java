@@ -11,6 +11,7 @@ import org.example.forumservice.repo.CommentRepository;
 import org.example.forumservice.repo.IssueRepository;
 import org.example.forumservice.repo.RoleRepository;
 import org.example.forumservice.repo.UserRepository;
+import org.example.forumservice.service.comment.CommentService;
 import org.example.forumservice.util.BadRequestException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,29 +41,37 @@ class CommentServiceTest {
 
     @BeforeAll
     public void setUp() {
-        User user = new User();
-        user.setUsername("user");
-        user.setPassword("secret");
-        userRepository.save(user);
+        if (userRepository.findByUsername("user").isEmpty()) {
+            Role role = new Role("ROLE_USER");
+            roleRepository.save(role);
+            User user = new User();
+            user.setUsername("user");
+            user.setPassword("secret");
+            userRepository.save(user);
+        }
 
-        Role role = new Role("ROLE_REDACTOR");
-        roleRepository.save(role);
-        User redactor = new User();
-        redactor.setUsername("redactor");
-        redactor.setPassword("secret");
-        redactor.setRoles(List.of(role));
-        userRepository.save(redactor);
+        if (userRepository.findByUsername("redactor").isEmpty()) {
+            Role role = new Role("ROLE_REDACTOR");
+            roleRepository.save(role);
+            User redactor = new User();
+            redactor.setUsername("redactor");
+            redactor.setPassword("secret");
+            redactor.setRoles(List.of(role));
+            userRepository.save(redactor);
+        }
 
-        Role role2 = new Role("ROLE_ADMIN");
-        roleRepository.save(role2);
-        User admin = new User();
-        admin.setUsername("admin");
-        admin.setPassword("secret");
-        admin.setRoles(List.of(role2));
-        userRepository.save(admin);
+        if (userRepository.findByUsername("admin").isEmpty()) {
+            Role role2 = new Role("ROLE_ADMIN");
+            roleRepository.save(role2);
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setPassword("secret");
+            admin.setRoles(List.of(role2));
+            userRepository.save(admin);
+        }
     }
 
-    @BeforeEach
+    @AfterEach
     public void cleanUp() {
         commentRepository.deleteAll();
         issueRepository.deleteAll();
@@ -82,17 +91,9 @@ class CommentServiceTest {
                 .size());
     }
 
-    @Test
-    void getByIssue_IssueNotFound_ThrowsException() {
-        Assertions.assertThrows(BadRequestException.class, () -> commentService.getByIssue(GetByIssueDto
-                        .builder()
-                        .issueId(1L)
-                        .build())
-                .size());
-    }
 
     @Test
-    void create_IssueAndAuthorExist_Creates() {
+    void create_CorrectData_Creates() {
         User user = userRepository.findByUsername("user").get();
 
         commentService.create(CreateCommentDto.builder()
@@ -103,24 +104,6 @@ class CommentServiceTest {
         Assertions.assertEquals(1, commentRepository.count());
     }
 
-    @Test
-    void create_IssueNotFound_ThrowsException() {
-        User user = userRepository.findByUsername("user").get();
-
-        Assertions.assertThrows(BadRequestException.class,
-                () -> commentService.create(CreateCommentDto.builder()
-                        .issueId(1L)
-                        .authorUsername(user.getUsername())
-                        .build()));
-    }
-
-    @Test
-    void create_UserNotFound_ThrowsException() {
-        Assertions.assertThrows(BadRequestException.class,
-                () -> commentService.create(CreateCommentDto.builder()
-                        .issueId(getIssue("user").getId())
-                        .build()));
-    }
 
     @Test
     void delete_PretenderIsAuthor_Deletes() {
@@ -164,30 +147,6 @@ class CommentServiceTest {
                 .username("user")
                 .build()));
         Assertions.assertEquals(1, commentRepository.count());
-    }
-
-
-    @Test
-    void delete_UserNotFound_ThrowsException() {
-        Issue issue = getIssue("user");
-        Comment comment = getComment(issue, "user");
-
-        Assertions.assertThrows(BadRequestException.class,
-                () -> commentService.delete(DeleteCommentDto.builder()
-                        .commentId(comment.getId())
-                        .username("user1")
-                        .build()));
-    }
-
-    @Test
-    void deleteComment_NotFound_ThrowsException() {
-        User user = userRepository.findByUsername("user").get();
-        userRepository.save(user);
-        Assertions.assertThrows(BadRequestException.class,
-                () -> commentService.delete(DeleteCommentDto.builder()
-                        .commentId(1L)
-                        .username("user")
-                        .build()));
     }
 
 

@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.example.forumservice.util.user.UserExists;
 
 import java.io.Serializable;
 
@@ -20,5 +21,6 @@ public class CreateIssueDto implements Serializable {
     @NotEmpty
     private final String description;
     @NotEmpty
+    @UserExists
     private final String author;
 }

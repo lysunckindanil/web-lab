@@ -1,13 +1,15 @@
-package org.example.forumservice.service;
+package org.example.forumservice.service.issue;
 
 import lombok.RequiredArgsConstructor;
-import org.example.forumservice.model.Role;
-import org.example.forumservice.util.BadRequestException;
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
 import org.example.forumservice.model.Issue;
+import org.example.forumservice.model.Role;
 import org.example.forumservice.model.User;
 import org.example.forumservice.repo.IssueRepository;
+import org.example.forumservice.service.comment.CommentService;
+import org.example.forumservice.service.user.UserService;
+import org.example.forumservice.util.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
@@ -38,11 +40,10 @@ public class IssueServiceImpl implements IssueService {
     @Transactional
     @Override
     public void create(CreateIssueDto dto) {
-        Optional<User> userOptional = userService.findByUsername(dto.getAuthor());
-        if (userOptional.isEmpty()) throw new BadRequestException("Author doesn't exist");
+        User author = userService.findByUsername(dto.getAuthor()).get();
 
         Issue issue = new Issue();
-        issue.setAuthor(userOptional.get());
+        issue.setAuthor(author);
         issue.setTitle(dto.getTitle());
         issue.setDescription(dto.getDescription());
         issueRepository.save(issue);
@@ -51,18 +52,15 @@ public class IssueServiceImpl implements IssueService {
     @Transactional
     @Override
     public void delete(DeleteIssueDto dto) {
-        Optional<Issue> issueOptional = issueRepository.findById(dto.getIssueId());
-        if (issueOptional.isEmpty()) throw new BadRequestException("Issue doesn't exist");
-        Optional<User> userOptional = userService.findByUsername(dto.getUsername());
-        if (userOptional.isEmpty()) throw new BadRequestException("Author doesn't exist");
-        User user = userOptional.get();
+        Issue issue = issueRepository.findById(dto.getIssueId()).get();
+        User user = userService.findByUsername(dto.getUsername()).get();
 
-        if (user.getUsername().equals(issueOptional.get().getAuthor().getUsername())) {
-            commentService.deleteAllByIssue(issueOptional.get().getId());
-            issueRepository.delete(issueOptional.get());
+        if (user.getUsername().equals(issue.getAuthor().getUsername())) {
+            commentService.deleteAllByIssue(issue.getId());
+            issueRepository.delete(issue);
         } else if (user.getRoles().stream().map(Role::getName).anyMatch(role -> role.equals("ROLE_REDACTOR") || role.equals("ROLE_ADMIN"))) {
-            commentService.deleteAllByIssue(issueOptional.get().getId());
-            issueRepository.delete(issueOptional.get());
+            commentService.deleteAllByIssue(issue.getId());
+            issueRepository.delete(issue);
         } else {
             throw new BadRequestException("Forbidden to delete issue");
         }
