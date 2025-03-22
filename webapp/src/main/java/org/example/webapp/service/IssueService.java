@@ -16,7 +16,12 @@ public class IssueService {
         IssueDto issueDto = new IssueDto(1L, "title1", "description1", LocalDateTime.now(), "user1");
         IssueDto issueDto1 = new IssueDto(2L, "title2", "description2", LocalDateTime.now(), "user2");
         IssueDto issueDto2 = new IssueDto(3L, "title3", "description3", LocalDateTime.now(), "user3");
-        IssueDto issueDto3 = new IssueDto(4L, "title4", "description4", LocalDateTime.now(), "user4");
+        IssueDto issueDto3 = new IssueDto(4L, "title4", "Описание: Вихрь Идей с гордостью объявляет о запуске программы\n" +
+                "              менторства для талантливых молодых дизайнеров! Программа\n" +
+                "              предоставит уникальную возможность обучения под руководством\n" +
+                "              опытных специалистов компании. Участники получат ценные знания и\n" +
+                "              практический опыт, помогающие им развивать свои навыки и строить\n" +
+                "              успешную карьеру. Заявки принимаются до 15 октября.", LocalDateTime.now(), "user4");
         return List.of(issueDto, issueDto1, issueDto2, issueDto3);
     }
 

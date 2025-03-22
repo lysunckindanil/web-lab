@@ -4,89 +4,22 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="/styles/styles.css" rel="stylesheet"/>
+    <link href="/styles/border.css" rel="stylesheet">
     <link rel="icon" href="/icon/favicon.ico" type="image/x-icon"/>
     <title th:text="${issue.getTitle()}"></title>
-    <meta
-            name="description"
-            content="Дизайн и брендинг.
-      Маркетинг и коммуникации.
-      Цифровой маркетинг.
-      Творческий подход.
-      Ориентация на результат.
-      Индивидуальный подход.
-      Прозрачная коммуникация."
-    />
-
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function (m, e, t, r, i, k, a) {
-            m[i] =
-                m[i] ||
-                function () {
-                    (m[i].a = m[i].a || []).push(arguments);
-                };
-            m[i].l = 1 * new Date();
-            for (var j = 0; j < document.scripts.length; j++) {
-                if (document.scripts[j].src === r) {
-                    return;
-                }
-            }
-            (k = e.createElement(t)),
-                (a = e.getElementsByTagName(t)[0]),
-                (k.async = 1),
-                (k.src = r),
-                a.parentNode.insertBefore(k, a);
-        })(
-            window,
-            document,
-            "script",
-            "https://mc.yandex.ru/metrika/tag.js",
-            "ym"
-        );
-
-        ym(99192957, "init", {
-            clickmap: true,
-            trackLinks: true,
-            accurateTrackBounce: true,
-            webvisor: true,
-        });
-    </script>
-    <noscript
-    >
-        <div>
-            <img
-                    src="https://mc.yandex.ru/watch/99192957"
-                    style="position: absolute; left: -9999px"
-                    alt=""
-            /></div
-        >
-    </noscript>
-    <!-- Google tag (gtag.js) -->
-    <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-N0GHYE5D4D"
-    ></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag("js", new Date());
-
-        gtag("config", "G-N0GHYE5D4D");
-    </script>
 </head>
 
 <body>
 <header class="header">
-    <img class="logo-icon" src="/icon/logo.png" alt="logo"/>
-    <h1>Вихрь Идей</h1>
+    <div>
+        <img class="logo-icon" src="/icon/logo.png" alt="logo"/>
+        <h1>Вихрь Идей</h1>
+    </div>
     <nav>
         <ul>
             <li><a href="/index.html">Вернуться на сайт</a></li>
             <li><a href="/forum">Форум</a></li>
+            <li><a href="/forum/issue/create">Задать вопрос</a></li>
             <li><a href="/forum/profile">Мой профиль</a></li>
         </ul>
     </nav>
@@ -94,23 +27,52 @@
 
 <main>
     <article>
-        <h2 th:text="${issue.getTitle()}">title</h2>
-        <div style="border: black 1px solid; padding: 20px">
-            <p th:text="${issue.getId()}"></p>
-            <p th:text="${issue.getDescription()}"></p>
-            <p th:text="${issue.getCreatedAtFormatted()}"></p>
-            <p th:text="${issue.getAuthorUsername()}"></p>
-        </div>
+        <h2>Вопрос для обсуждения</h2>
+        <ul>
+            <li>
+                <div>
+                    <h3 th:text="${issue.getTitle()}">title</h3>
+                    <p th:text="${issue.getDescription()}">description</p>
+                    <p>Дата публикации: <span th:text="${issue.getCreatedAtFormatted()}"></span></p>
+                    <p>Автор: <span th:text="${issue.getAuthorUsername()}"></span></p>
+                    <button th:if="${isRedactor}">Удалить</button>
+                </div>
+            </li>
+        </ul>
+
         <h2>Комментарии</h2>
-        <div>
-            <div style="border: black 1px solid; padding: 20px; margin: 20px 0;" th:each="comment : ${comments}">
-                <p th:text="${comment.getAuthorUsername()}"></p>
-                <p th:text="${comment.getContent()}"></p>
-                <p th:text="${comment.getCreatedAtFormatted()}"></p>
+
+        <ul>
+            <li class="thing" th:each="comment : ${comments}">
+                <h3 th:text="${comment.getAuthorUsername()}">title</h3>
+                <p th:text="${comment.getContent()}">content</p>
+                <p>Дата публикации: <span th:text="${comment.getCreatedAtFormatted()}"></span></p>
                 <button th:if="${isRedactor}">Удалить</button>
-            </div>
-        </div>
+            </li>
+        </ul>
     </article>
+
+    <aside class="aside">
+        <div>
+            <h2>Правила форума</h2>
+            <ul>
+                <li>Решения модераторов и администрации являются окончательными.</li>
+                <li>Не допускаются оскорбления, дискриминация и провокации.</li>
+                <li>Соблюдайте общепринятые нормы общения и этикет.</li>
+                <li>Не размещайте рекламу, флуд, повторяющиеся сообщения или бессмысленный контент.</li>
+                <li>Не размещайте материалы, нарушающие законы (пиратство, экстремизм и т.д.).</li>
+            </ul>
+        </div>
+        <div>
+            <h2>Контакты редакторов</h2>
+            <ul>
+                <li>alexey.ivanov@example.com</li>
+                <li>maria.petrova@example.com</li>
+                <li>smirnov1997@example.com</li>
+                <li>ekaterina25@example.com</li>
+            </ul>
+        </div>
+    </aside>
 </main>
 
 <footer class="footer">
@@ -119,20 +81,6 @@
         Несанкционированное копирование, распространение или использование
         материалов с этого сайта запрещено.
     </p>
-    <!-- Yandex.Metrika informer -->
-    <a
-            href="https://metrika.yandex.ru/stat/?id=99192957&amp;from=informer"
-            target="_blank"
-            rel="nofollow"
-    ><img
-            src="https://informer.yandex.ru/informer/99192957/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
-            style="width: 88px; height: 31px; border: 0"
-            alt="Яндекс.Метрика"
-            title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)"
-            class="ym-advanced-informer"
-            data-cid="99192957"
-            data-lang="ru"
-    /></a>
 </footer>
 </body>
 </html>

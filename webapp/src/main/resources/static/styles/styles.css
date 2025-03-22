@@ -1,148 +1,217 @@
 * {
-  font-family: "Roboto Light", sans-serif;
-  font-size: 1.2rem;
-  margin: 0;
-  padding: 0;
+    font-family: "Roboto Light", sans-serif;
+    font-size: 1.1rem;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 1.6rem;
+}
+
+h2 {
+    font-size: 1.4rem;
 }
 
 p {
-  margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
 
 body {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10+ */
-  user-select: none; /* Standard syntax */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
 }
 
 /* header */
 
-body header {
-  background-color: #f0f0f0;
-  display: flex;
-  padding: 15px 200px;
-  flex-direction: row;
-  align-items: center;
-}
-body header h1 {
-  font-size: 1.6rem;
-  color: #09244b;
-  font-weight: bold;
+header {
+    background-color: #f0f0f0;
+    display: flex;
+    padding: 0.7rem 20rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
-body header ul {
-  margin-left: 30px;
+header h1 {
+    font-size: 1.6rem;
+    padding: 0;
+    margin: 5px 0 0;
+    color: #09244b;
+    font-weight: bold;
 }
 
-body header li {
-  display: inline;
-  margin-left: 20px;
+header div {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
 }
 
-body header li a {
-  text-decoration: none;
-  color: #09244b;
+header ul {
+    margin-left: 30px;
+}
+
+header li {
+    display: inline;
+    margin-left: 20px;
+}
+
+header li a {
+    text-decoration: none;
+    color: #09244b;
 }
 
 /* main */
 main {
-  display: flex;
-  gap: 60px;
-  padding: 30px 200px;
-  align-items: flex-start;
-  justify-content: space-between;
+    display: flex;
+    gap: 1.5rem;
+    padding: 3rem 20rem;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+article {
+    width: 70%;
 }
 
 /* article */
 article h2 {
-  margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
 
 article li {
-  list-style-type: none;
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 20px;
-  margin: 10px 0px;
+    list-style-type: none;
+    margin: 1rem 0;
 }
+
+article li a {
+    width: 100%;
+}
+
 /* img */
 img {
-  margin: 20px 10px;
-  width: 90%;
-  border-radius: 10px;
+    margin: 20px 10px;
+    width: 90%;
+    border-radius: 10px;
 }
 
 .logo-icon {
-  margin: 0 10px 0 0;
-  width: 40px;
-  border-radius: 0;
+    margin: 0 10px 0 0;
+    width: 40px;
+    border-radius: 0;
 }
 
 /* aside */
 .aside {
-  flex-shrink: 0;
-  background-color: #f0f0f0;
-  padding: 60px;
+    flex-shrink: 0;
+    max-width: 20%;
+    background-color: #f0f0f0;
+    padding: 3rem;
 }
-aside li,
-h2 {
-  margin-bottom: 10px;
+
+.aside h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
 }
+
+aside div:first-child {
+    margin-top: 0;
+}
+
+aside div {
+    margin-top: 20px;
+}
+
 
 /* footer */
 
 .footer {
-  text-align: center;
-  background-color: #f0f0f0;
-  padding-top: 10px;
-  border: solid #f0f0f0 3px;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding-top: 2rem;
+    border: solid #f0f0f0 3px;
 }
 
-@media screen and (max-width: 1600px) {
-  .aside {
-    display: flex;
-    gap: 100px;
-    justify-content: center;
-  }
-  main {
-    padding: 20px 100px;
-    flex-direction: column;
-    align-items: center;
-  }
-  body header {
-    padding: 20px 100px;
-    justify-content: center;
-  }
+@media screen and (max-width: 1700px) {
+    article {
+        width: 100%;
+    }
+
+    .aside {
+        max-width: 20%;
+    }
+
+    main {
+        padding: 2rem 10rem;
+    }
+
+    header {
+        padding: 20px 10rem;
+    }
+}
+
+@media screen and (max-width: 1400px) {
+    .aside {
+        display: flex;
+        gap: 5rem;
+        justify-content: center;
+        max-width: 90%;
+    }
+
+    aside div {
+        margin-top: 0;
+    }
+
+    main {
+        padding: 20px 8rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header {
+        padding: 2rem 8rem;
+    }
 }
 
 @media screen and (max-width: 980px) {
-  .aside {
-    display: none;
-  }
-  body header {
-    flex-direction: column;
-    padding: 20px 40px;
-  }
+    .aside {
+        display: none;
+    }
 
-  body header ul {
-    margin-left: 0;
-    margin-top: 10px;
-  }
-  body header li {
-    display: inline;
-    margin: 0 10px;
-  }
+    header {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
+    }
 
-  .logo-icon {
-    margin-right: 0;
-  }
+    header div {
+        gap: 0.7rem;
+    }
+    header ul {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
 
-  main {
-    padding: 30px 40px;
-  }
+    header li {
+        display: inline;
+        margin: 0 1rem;
+    }
 
-  img {
-    width: 100%;
-    margin: 20px 10px;
-  }
+    header li a {
+        font-size: 1.5rem;
+    }
+
+    .logo-icon {
+        margin-right: 0;
+    }
+
+    main {
+        padding: 2rem 2rem;
+    }
+
+    img {
+        width: 100%;
+        margin: 2rem 2rem;
+    }
 }

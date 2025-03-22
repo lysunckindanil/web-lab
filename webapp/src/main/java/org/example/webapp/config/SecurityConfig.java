@@ -28,7 +28,8 @@ public class SecurityConfig {
                         .failureUrl("/login?error")
                         .defaultSuccessUrl("/index.html"))
                 .logout(logout -> logout
-                        .logoutUrl("/logout"));
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/"));
         return http.build();
     }
 }
