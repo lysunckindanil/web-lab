@@ -1,5 +1,5 @@
 * {
-  font-family: sans-serif;
+  font-family: "Roboto Light", sans-serif;
   font-size: 1.2rem;
   margin: 0;
   padding: 0;
@@ -73,8 +73,7 @@ img {
 }
 
 .logo-icon {
-  margin: 0;
-  margin-right: 10px;
+  margin: 0 10px 0 0;
   width: 40px;
   border-radius: 0;
 }

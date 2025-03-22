@@ -2,14 +2,14 @@ package org.example.forumservice.service.comment;
 
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
-import org.example.forumservice.dto.comment.GetByIssueDto;
+import org.example.forumservice.dto.comment.GetCommentsByIssueDto;
 import org.example.forumservice.model.Comment;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface CommentService {
-    List<Comment> getByIssue(GetByIssueDto dto);
+    List<Comment> getByIssue(GetCommentsByIssueDto dto);
 
     @Transactional
     void create(CreateCommentDto dto);

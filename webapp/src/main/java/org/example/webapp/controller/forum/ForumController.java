@@ -2,6 +2,7 @@ package org.example.webapp.controller.forum;
 
 import lombok.RequiredArgsConstructor;
 import org.example.webapp.model.User;
+import org.example.webapp.service.ForumService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,12 @@ import java.security.Principal;
 public class ForumController {
 
     private final UserDetailsService userDetailsService;
+    private final ForumService forumService;
 
     @GetMapping
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("issues", forumService.getIssues());
+        model.addAttribute("isRedactor", forumService.isRedactor());
         return "forum/index";
     }
 
@@ -32,6 +36,5 @@ public class ForumController {
                 .replace("ROLE_", ""));
         return "forum/profile";
     }
-
 
 }

@@ -3,7 +3,7 @@ package org.example.forumservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
-import org.example.forumservice.dto.comment.GetByIssueDto;
+import org.example.forumservice.dto.comment.GetCommentsByIssueDto;
 import org.example.forumservice.model.Comment;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.Role;
@@ -91,7 +91,7 @@ class CommentControllerTest {
 
     @Test
     void getByIssue_IssueDoesntExist_ThrowsException() throws Exception {
-        GetByIssueDto dto = GetByIssueDto.builder().issueId(1L).build();
+        GetCommentsByIssueDto dto = GetCommentsByIssueDto.builder().issueId(1L).build();
         mvc.perform(
                 post("/api/v1/comment/getByIssue")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -102,7 +102,7 @@ class CommentControllerTest {
     @Test
     void getByIssue_IssueExists_ServiceCalled() throws Exception {
         Mockito.doReturn(new ArrayList<>()).when(commentService).getByIssue(Mockito.any());
-        GetByIssueDto dto = GetByIssueDto.builder().issueId(getIssue("user").getId()).build();
+        GetCommentsByIssueDto dto = GetCommentsByIssueDto.builder().issueId(getIssue("user").getId()).build();
         mvc.perform(
                 post("/api/v1/comment/getByIssue")
                         .contentType(MediaType.APPLICATION_JSON)

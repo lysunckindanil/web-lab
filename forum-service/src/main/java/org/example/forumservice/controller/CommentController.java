@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.forumservice.dto.comment.CommentDto;
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
-import org.example.forumservice.dto.comment.GetByIssueDto;
+import org.example.forumservice.dto.comment.GetCommentsByIssueDto;
 import org.example.forumservice.model.Comment;
 import org.example.forumservice.service.comment.CommentService;
 import org.example.forumservice.util.BadRequestException;
@@ -25,7 +25,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/getByIssue")
-    public List<CommentDto> getByIssue(@Valid @RequestBody GetByIssueDto dto, BindingResult bindingResult) {
+    public List<CommentDto> getByIssue(@Valid @RequestBody GetCommentsByIssueDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
         return commentService.getByIssue(dto).stream().map(CommentController::toCommentDto).toList();

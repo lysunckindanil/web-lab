@@ -3,7 +3,7 @@ package org.example.forumservice.service.comment;
 import lombok.RequiredArgsConstructor;
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
-import org.example.forumservice.dto.comment.GetByIssueDto;
+import org.example.forumservice.dto.comment.GetCommentsByIssueDto;
 import org.example.forumservice.model.Comment;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.Role;
@@ -28,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public List<Comment> getByIssue(GetByIssueDto dto) {
+    public List<Comment> getByIssue(GetCommentsByIssueDto dto) {
         return commentRepository.getByIssue(issueService.findById(dto.getIssueId()).get());
     }
 

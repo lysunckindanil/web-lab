@@ -32,14 +32,18 @@ public class UserService implements UserDetailsService {
         if (roleRepository.findByName("ROLE_USER") == null) {
             roleRepository.save(new Role("ROLE_USER"));
         }
+        if (roleRepository.findByName("ROLE_REDACTOR") == null) {
+            roleRepository.save(new Role("ROLE_REDACTOR"));
+        }
 
         if (userRepository.getByUsername("admin").isEmpty()) {
-            User user = new User();
-            user.setUsername("admin");
-            user.setPassword(passwordEncoder.encode("secret"));
-            user.getRoles().add(roleRepository.findByName("ROLE_ADMIN"));
-            user.getRoles().add(roleRepository.findByName("ROLE_USER"));
-            userRepository.save(user);
+            User admin = new User();
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder.encode("secret"));
+            admin.getRoles().add(roleRepository.findByName("ROLE_ADMIN"));
+            admin.getRoles().add(roleRepository.findByName("ROLE_USER"));
+            admin.getRoles().add(roleRepository.findByName("ROLE_REDACTOR"));
+            userRepository.save(admin);
         }
     }
 

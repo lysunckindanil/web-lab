@@ -28,14 +28,13 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("user", userDto);
-            model.addAttribute("error", bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
+    public String signup(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors())
             return "auth/signup";
-        }
 
         userService.register(userDto.getUsername(), userDto.getPassword());
-        return "redirect:/login";
+        model.addAttribute("success", true);
+        model.addAttribute("user", new UserDto());
+        return "auth/signup";
     }
 }

@@ -3,6 +3,7 @@ package org.example.forumservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
+import org.example.forumservice.dto.issue.GetIssueByIdDto;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.Role;
 import org.example.forumservice.model.User;
@@ -10,7 +11,10 @@ import org.example.forumservice.repo.IssueRepository;
 import org.example.forumservice.repo.RoleRepository;
 import org.example.forumservice.repo.UserRepository;
 import org.example.forumservice.service.issue.IssueService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -22,7 +26,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -63,18 +67,38 @@ class IssueControllerTest {
         issueRepository.deleteAll();
     }
 
-    @BeforeEach
-    void cleanUp() {
-        issueRepository.deleteAll();
-    }
 
     @Test
     void getIssues() throws Exception {
-        Mockito.doReturn(new ArrayList<>()).when(issueService).findAll();
+        getIssue("user");
         mvc.perform(
                 get("/api/v1/issue")
         ).andExpect(MockMvcResultMatchers.status().isOk());
         Mockito.verify(issueService, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    void getById_IssueDoesntExist_ThrowsException() throws Exception {
+        GetIssueByIdDto dto = GetIssueByIdDto.builder().issueId(1L).build();
+
+        mvc.perform(
+                post("/api/v1/issue/getById")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    void getById_IssueExists_ServiceCalled() throws Exception {
+        Issue issue = getIssue("user");
+        Mockito.doReturn(Optional.of(issue)).when(issueService).findById(issue.getId());
+        GetIssueByIdDto dto = GetIssueByIdDto.builder().issueId(issue.getId()).build();
+        mvc.perform(
+                post("/api/v1/issue/getById")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto))
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+        Mockito.verify(issueService, Mockito.times(1)).findById(Mockito.anyLong());
     }
 
     @Test

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
+import org.example.forumservice.dto.issue.GetIssueByIdDto;
 import org.example.forumservice.dto.issue.IssueDto;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.service.issue.IssueService;
@@ -23,6 +24,13 @@ public class IssueController {
     @GetMapping
     public List<IssueDto> getIssues() {
         return issueService.findAll().stream().map(IssueController::toIssueDto).toList();
+    }
+
+    @PostMapping("/getById")
+    public IssueDto getById(@Valid @RequestBody GetIssueByIdDto getIssueByIdDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
+        return toIssueDto(issueService.findById(getIssueByIdDto.getIssueId()).get());
     }
 
     @PostMapping("/create")

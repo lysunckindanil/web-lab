@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="/styles/styles.css" rel="stylesheet"/>
     <link rel="icon" href="/icon/favicon.ico" type="image/x-icon"/>
-    <title>Создать топик Вихрь Идей</title>
+    <title th:text="${issue.getTitle()}"></title>
     <meta
             name="description"
             content="Дизайн и брендинг.
@@ -94,27 +94,23 @@
 
 <main>
     <article>
-        <h2>Создать топик</h2>
-        <form th:action="@{/forum/issue/create}" th:method="post" th:object="${issue}">
-            <p style="color: green" th:if="${success}">Успешно создали топик для обсуждения</p>
-
-            <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
-            <label for="title" class="screenreader">Название</label>
-            <br>
-            <input type="text" id="title" th:field="*{title}" placeholder="Придумайте название вышей проблемы"
-                   autofocus="">
-            <br>
-            <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
-            <label for="description" class="screenreader">Описание</label>
-            <br>
-            <textarea id="description" th:field="*{description}" placeholder="Сформулируйте описание проблемы"
-                      autofocus=""
-            ></textarea>
-            <br>
-            <button type="submit">Создать</button>
-        </form>
+        <h2 th:text="${issue.getTitle()}">title</h2>
+        <div style="border: black 1px solid; padding: 20px">
+            <p th:text="${issue.getId()}"></p>
+            <p th:text="${issue.getDescription()}"></p>
+            <p th:text="${issue.getCreatedAtFormatted()}"></p>
+            <p th:text="${issue.getAuthorUsername()}"></p>
+        </div>
+        <h2>Комментарии</h2>
+        <div>
+            <div style="border: black 1px solid; padding: 20px; margin: 20px 0;" th:each="comment : ${comments}">
+                <p th:text="${comment.getAuthorUsername()}"></p>
+                <p th:text="${comment.getContent()}"></p>
+                <p th:text="${comment.getCreatedAtFormatted()}"></p>
+                <button th:if="${isRedactor}">Удалить</button>
+            </div>
+        </div>
     </article>
-    <div style="height: 50%; display: block"></div>
 </main>
 
 <footer class="footer">

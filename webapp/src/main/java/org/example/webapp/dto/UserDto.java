@@ -16,6 +16,6 @@ public class UserDto implements Serializable {
     @UniqueUsername(message = "Логин занят другим пользователем")
     private String username;
 
-    @Size(min = 4, max = 20, message = "Логин должен быть от 4 до 20 символов")
+    @Size(min = 4, max = 20, message = "Пароль должен быть от 4 до 20 символов")
     private String password;
 }

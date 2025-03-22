@@ -7,18 +7,20 @@
 </head>
 <body>
 <div class="content">
-    <form class="login-form" th:method="post" th:action="@{/signup}">
+    <form class="login-form" th:method="post" th:action="@{/signup}" th:object="${user}">
         <h2>Регистрация</h2>
-        <p style="color: red" th:if="${error}" th:text="${error}"></p>
+        <p style="color: green" th:if="${success}">Успешная регистрация</p>
+
+        <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         <p>
             <label for="username" class="screenreader">Логин</label>
-            <input type="text" id="username" name="username" placeholder="Ваш логин" autofocus="">
+            <input type="text" id="username" name="username" th:field="*{username}" placeholder="Ваш логин" autofocus="">
         </p>
+        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
         <p>
             <label for="password" class="screenreader">Пароль</label>
-            <input type="password" id="password" name="password" placeholder="Ваш пароль" required>
+            <input type="password" id="password" name="password" th:field="*{password}" placeholder="Ваш пароль">
         </p>
-        <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}">
         <button type="submit" class="primary">Зарегистрироваться</button>
         <a href="/login">У меня уже есть аккаунт</a>
     </form>

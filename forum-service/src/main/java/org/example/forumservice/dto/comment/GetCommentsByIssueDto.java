@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Builder
 @Getter
 @AllArgsConstructor
-public class GetByIssueDto implements Serializable {
+public class GetCommentsByIssueDto implements Serializable {
     @IssueExists
     private final Long issueId;
 }

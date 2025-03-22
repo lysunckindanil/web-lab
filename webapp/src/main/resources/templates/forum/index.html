@@ -94,7 +94,16 @@
 <main>
     <article>
         <h2>Форум</h2>
-        <a href="forum/issue/create"> Создать топик</a>
+        <a href="forum/issue/create"> Создать топик для обсуждения</a>
+        <div>
+            <div style="border: black 1px solid; padding: 20px; margin: 20px 0" th:each="issue : ${issues}">
+                <a th:href="@{/forum/issue/{id}(id=${issue.getId()})}" th:text="${issue.getTitle()}"></a>
+                <p th:text="${issue.getDescription()}"></p>
+                <p th:text="${issue.getCreatedAtFormatted()}"></p>
+                <p th:text="${issue.getAuthorUsername()}"></p>
+                <button th:if="${isRedactor}">Удалить</button>
+            </div>
+        </div>
     </article>
 </main>
 

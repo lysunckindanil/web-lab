@@ -2,7 +2,7 @@ package org.example.forumservice.service;
 
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
-import org.example.forumservice.dto.comment.GetByIssueDto;
+import org.example.forumservice.dto.comment.GetCommentsByIssueDto;
 import org.example.forumservice.model.Comment;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.Role;
@@ -84,7 +84,7 @@ class CommentServiceTest {
         getComment(issue, "user");
         getComment(issue, "user");
 
-        Assertions.assertEquals(2, commentService.getByIssue(GetByIssueDto
+        Assertions.assertEquals(2, commentService.getByIssue(GetCommentsByIssueDto
                         .builder()
                         .issueId(issue.getId())
                         .build())

@@ -1,4 +1,4 @@
-package org.example.webapp.dto.forum;
+package org.example.webapp.dto.forum.issue;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
