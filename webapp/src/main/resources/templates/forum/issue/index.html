@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <link href="/styles/styles.css" rel="stylesheet"/>
     <link href="/styles/border.css" rel="stylesheet">
+    <link href="/styles/form.css" rel="stylesheet">
+    <script src="/scripts/main.js"></script>
     <link rel="icon" href="/icon/favicon.ico" type="image/x-icon"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title th:text="${issue.getTitle()}"></title>
 </head>
 
@@ -35,19 +39,37 @@
                     <p th:text="${issue.getDescription()}">description</p>
                     <p>Дата публикации: <span th:text="${issue.getCreatedAtFormatted()}"></span></p>
                     <p>Автор: <span th:text="${issue.getAuthorUsername()}"></span></p>
-                    <button th:if="${isRedactor}">Удалить</button>
+                    <button class="danger" th:if="${isRedactor}" th:value="${issue.getId()}"
+                            onclick="deleteIssueIndex(this.value)">Удалить
+                    </button>
                 </div>
             </li>
         </ul>
 
         <h2>Комментарии</h2>
 
+        <div>
+            <form class="form-style-1">
+            <textarea
+                    class="form-control field-long"
+                    id="exampleFormControlTextarea1"
+                    rows="4"
+                    placeholder="Ваш комментарий"
+            ></textarea>
+
+                <input type="submit" value="Оставить комментарий"/>
+            </form>
+
+        </div>
+
         <ul>
-            <li class="thing" th:each="comment : ${comments}">
+            <li th:id="comment + ${comment.getId()}" class="thing" th:each="comment : ${comments}">
                 <h3 th:text="${comment.getAuthorUsername()}">title</h3>
                 <p th:text="${comment.getContent()}">content</p>
                 <p>Дата публикации: <span th:text="${comment.getCreatedAtFormatted()}"></span></p>
-                <button th:if="${isRedactor}">Удалить</button>
+                <button class="danger" th:if="${isRedactor}" th:value="${comment.getId()}"
+                        onclick="deleteComment(this.value)">Удалить
+                </button>
             </li>
         </ul>
     </article>

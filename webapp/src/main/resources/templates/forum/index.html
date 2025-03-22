@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <link href="/styles/styles.css" rel="stylesheet"/>
     <link href="/styles/text-custom.css" rel="stylesheet"/>
     <link href="/styles/border.css" rel="stylesheet">
+    <script src="/scripts/main.js"></script>
     <link rel="icon" href="/icon/favicon.ico" type="image/x-icon"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Форум Вихрь Идей</title>
 </head>
 
@@ -30,7 +33,7 @@
         <h2>Вопросы</h2>
 
         <ul>
-            <li class="thing animated" th:each="issue : ${issues}">
+            <li class="thing animated" th:each="issue : ${issues}" th:id="issue + ${issue.getId()}">
                 <a class="custom-link" th:href="@{/forum/issue/{id}(id=${issue.getId()})}">
                     <h3 th:text="${issue.getTitle()}">title</h3>
                     <p th:text="${issue.getDescription()}">
@@ -38,7 +41,9 @@
                     </p>
                     <p>Дата публикации: <span th:text="${issue.getCreatedAtFormatted()}"></span></p>
                 </a>
-                <button th:if="${isRedactor}">Удалить</button>
+                <button class="danger" th:if="${isRedactor}" th:value="${issue.getId()}"
+                        onclick="deleteIssue(this.value)">Удалить
+                </button>
             </li>
         </ul>
     </article>

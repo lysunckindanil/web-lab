@@ -44,5 +44,6 @@ public class IssueService {
                 .issueId(issue.getIssueId())
                 .username(SecurityContextHolder.getContext().getAuthentication().getName())
                 .build();
+        System.out.println(request);
     }
 }

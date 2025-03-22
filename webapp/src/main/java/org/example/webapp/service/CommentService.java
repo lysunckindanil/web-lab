@@ -36,6 +36,6 @@ public class CommentService {
                 .commentId(dto.getCommentId())
                 .username(SecurityContextHolder.getContext().getAuthentication().getName())
                 .build();
-
+        System.out.println(request);
     }
 }

@@ -188,6 +188,7 @@ aside div {
     header div {
         gap: 0.7rem;
     }
+
     header ul {
         margin-left: 0;
         margin-top: 1rem;
@@ -214,4 +215,29 @@ aside div {
         width: 100%;
         margin: 2rem 2rem;
     }
+}
+
+
+button {
+    background: #4b99ad;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: #fff;
+    margin: 10px 0;
+    display: block;
+}
+
+button:hover {
+    background: #4691a4;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+button.danger {
+    background: #cd4d60;
+}
+
+button.danger:hover {
+    background: #df2e57;
 }
