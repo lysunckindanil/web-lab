@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
 import org.example.forumservice.dto.issue.IssueDto;
-import org.example.forumservice.entity.Issue;
+import org.example.forumservice.model.Issue;
 import org.example.forumservice.service.IssueService;
 import org.example.forumservice.util.BadRequestException;
 import org.springframework.http.ResponseEntity;

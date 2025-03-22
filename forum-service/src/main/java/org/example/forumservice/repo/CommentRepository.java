@@ -1,7 +1,7 @@
 package org.example.forumservice.repo;
 
-import org.example.forumservice.entity.Comment;
-import org.example.forumservice.entity.Issue;
+import org.example.forumservice.model.Comment;
+import org.example.forumservice.model.Issue;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

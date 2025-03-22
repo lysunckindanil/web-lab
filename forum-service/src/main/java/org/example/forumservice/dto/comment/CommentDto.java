@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * DTO for {@link org.example.forumservice.entity.Comment}
+ * DTO for {@link org.example.forumservice.model.Comment}
  */
 
 @Builder

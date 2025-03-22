@@ -1,4 +1,4 @@
-package org.example.forumservice.entity;
+package org.example.webapp.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package org.example.forumservice.service;
 
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
-import org.example.forumservice.entity.Issue;
+import org.example.forumservice.model.Issue;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

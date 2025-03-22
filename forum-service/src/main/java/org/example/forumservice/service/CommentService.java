@@ -3,7 +3,7 @@ package org.example.forumservice.service;
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
 import org.example.forumservice.dto.comment.GetByIssueDto;
-import org.example.forumservice.entity.Comment;
+import org.example.forumservice.model.Comment;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

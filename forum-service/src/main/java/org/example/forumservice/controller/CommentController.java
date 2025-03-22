@@ -6,7 +6,7 @@ import org.example.forumservice.dto.comment.CommentDto;
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
 import org.example.forumservice.dto.comment.GetByIssueDto;
-import org.example.forumservice.entity.Comment;
+import org.example.forumservice.model.Comment;
 import org.example.forumservice.service.CommentService;
 import org.example.forumservice.util.BadRequestException;
 import org.springframework.http.ResponseEntity;

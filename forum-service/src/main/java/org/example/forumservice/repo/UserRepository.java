@@ -1,6 +1,6 @@
 package org.example.forumservice.repo;
 
-import org.example.forumservice.entity.User;
+import org.example.forumservice.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -9,7 +9,7 @@ import lombok.Getter;
 import java.io.Serializable;
 
 /**
- * DTO for {@link org.example.forumservice.entity.Issue}
+ * DTO for {@link org.example.forumservice.model.Issue}
  */
 
 @Builder

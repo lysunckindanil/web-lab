@@ -1,0 +1,15 @@
+User-agent: *
+allow: /
+
+User-agent: Googlebot
+Disallow: /
+Allow: /index.html
+Allow: /news.html
+
+
+User-agent: Yandex
+Disallow: /
+Allow: /index.html
+Allow: /news.html
+
+Sitemap: http://ideas-flight.web-prj.ru/sitemap.xml

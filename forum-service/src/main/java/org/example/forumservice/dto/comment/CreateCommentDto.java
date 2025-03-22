@@ -3,7 +3,7 @@ package org.example.forumservice.dto.comment;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.example.forumservice.entity.Comment;
+import org.example.forumservice.model.Comment;
 
 import java.io.Serializable;
 

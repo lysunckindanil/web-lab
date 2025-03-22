@@ -1,12 +1,12 @@
 package org.example.forumservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.forumservice.entity.Role;
+import org.example.forumservice.model.Role;
 import org.example.forumservice.util.BadRequestException;
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
-import org.example.forumservice.entity.Issue;
-import org.example.forumservice.entity.User;
+import org.example.forumservice.model.Issue;
+import org.example.forumservice.model.User;
 import org.example.forumservice.repo.IssueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

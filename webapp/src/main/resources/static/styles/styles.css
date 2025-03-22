@@ -1,0 +1,149 @@
+* {
+  font-family: sans-serif;
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+body {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+}
+
+/* header */
+
+body header {
+  background-color: #f0f0f0;
+  display: flex;
+  padding: 15px 200px;
+  flex-direction: row;
+  align-items: center;
+}
+body header h1 {
+  font-size: 1.6rem;
+  color: #09244b;
+  font-weight: bold;
+}
+
+body header ul {
+  margin-left: 30px;
+}
+
+body header li {
+  display: inline;
+  margin-left: 20px;
+}
+
+body header li a {
+  text-decoration: none;
+  color: #09244b;
+}
+
+/* main */
+main {
+  display: flex;
+  gap: 60px;
+  padding: 30px 200px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+/* article */
+article h2 {
+  margin-bottom: 15px;
+}
+
+article li {
+  list-style-type: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px 0px;
+}
+/* img */
+img {
+  margin: 20px 10px;
+  width: 90%;
+  border-radius: 10px;
+}
+
+.logo-icon {
+  margin: 0;
+  margin-right: 10px;
+  width: 40px;
+  border-radius: 0;
+}
+
+/* aside */
+.aside {
+  flex-shrink: 0;
+  background-color: #f0f0f0;
+  padding: 60px;
+}
+aside li,
+h2 {
+  margin-bottom: 10px;
+}
+
+/* footer */
+
+.footer {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding-top: 10px;
+  border: solid #f0f0f0 3px;
+}
+
+@media screen and (max-width: 1600px) {
+  .aside {
+    display: flex;
+    gap: 100px;
+    justify-content: center;
+  }
+  main {
+    padding: 20px 100px;
+    flex-direction: column;
+    align-items: center;
+  }
+  body header {
+    padding: 20px 100px;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 980px) {
+  .aside {
+    display: none;
+  }
+  body header {
+    flex-direction: column;
+    padding: 20px 40px;
+  }
+
+  body header ul {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+  body header li {
+    display: inline;
+    margin: 0 10px;
+  }
+
+  .logo-icon {
+    margin-right: 0;
+  }
+
+  main {
+    padding: 30px 40px;
+  }
+
+  img {
+    width: 100%;
+    margin: 20px 10px;
+  }
+}

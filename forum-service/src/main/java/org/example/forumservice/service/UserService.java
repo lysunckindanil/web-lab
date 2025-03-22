@@ -1,6 +1,6 @@
 package org.example.forumservice.service;
 
-import org.example.forumservice.entity.User;
+import org.example.forumservice.model.User;
 
 import java.util.Optional;
 

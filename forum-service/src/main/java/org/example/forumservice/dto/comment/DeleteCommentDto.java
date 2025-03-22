@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.example.forumservice.entity.Comment;
+import org.example.forumservice.model.Comment;
 
 import java.io.Serializable;
 
