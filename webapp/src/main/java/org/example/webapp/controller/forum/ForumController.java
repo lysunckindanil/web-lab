@@ -1,4 +1,4 @@
-package org.example.webapp.controller;
+package org.example.webapp.controller.forum;
 
 import lombok.RequiredArgsConstructor;
 import org.example.webapp.model.User;

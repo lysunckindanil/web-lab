@@ -8,19 +8,19 @@
 <body>
 <div class="content">
     <form class="login-form" th:method="post" th:action="@{/signup}">
-        <h2>Sign up</h2>
+        <h2>Регистрация</h2>
         <p style="color: red" th:if="${error}" th:text="${error}"></p>
         <p>
-            <label for="username" class="screenreader">Username</label>
-            <input type="text" id="username" name="username" placeholder="Username" autofocus="">
+            <label for="username" class="screenreader">Логин</label>
+            <input type="text" id="username" name="username" placeholder="Ваш логин" autofocus="">
         </p>
         <p>
-            <label for="password" class="screenreader">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password">
+            <label for="password" class="screenreader">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="Ваш пароль" required>
         </p>
         <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}">
-        <button type="submit" class="primary">Sign up</button>
-        <a href="/login">I already have an account</a>
+        <button type="submit" class="primary">Зарегистрироваться</button>
+        <a href="/login">У меня уже есть аккаунт</a>
     </form>
 </div>
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="/styles/styles.css" rel="stylesheet"/>
     <link rel="icon" href="/icon/favicon.ico" type="image/x-icon"/>
-    <title>Форум Вихрь Идей</title>
+    <title>Создать топик Вихрь Идей</title>
     <meta
             name="description"
             content="Дизайн и брендинг.
@@ -86,6 +86,7 @@
     <nav>
         <ul>
             <li><a href="/index.html">Вернуться на сайт</a></li>
+            <li><a href="/forum">Форум</a></li>
             <li><a href="/forum/profile">Мой профиль</a></li>
         </ul>
     </nav>
@@ -93,9 +94,24 @@
 
 <main>
     <article>
-        <h2>Форум</h2>
-        <a href="forum/issue/create"> Создать топик</a>
+        <h2>Создать топик</h2>
+        <form th:action="@{/forum/issue/create}" th:method="post" th:object="${issue}">
+            <p style="color: red" th:if="${error}" th:text="${error}"></p>
+            <label for="title" class="screenreader">Название</label>
+            <br>
+            <input type="text" id="title" th:field="*{title}" placeholder="Название" autofocus="">
+            <br>
+            <br>
+            <label for="description" class="screenreader">Описание</label>
+            <br>
+            <textarea id="description" th:field="*{description}" placeholder="Описание" autofocus=""
+            ></textarea>
+            <br>
+            <button type="submit">Создать</button>
+            <input type="hidden" th:name="${_csrf.getParameterName()}" th:value="${_csrf.getToken()}">
+        </form>
     </article>
+    <div style="height: 50%; display: block"></div>
 </main>
 
 <footer class="footer">

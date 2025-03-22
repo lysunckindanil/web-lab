@@ -8,19 +8,19 @@
 <body>
 <div class="content">
     <form class="login-form" th:method="post" th:action="@{/login}">
-        <h2>Please sign in</h2>
-        <p style="color: red" th:if="${param.error}" th:text="${param.error}"></p>
+        <h2>Пожалуйста войдите</h2>
+        <p style="color: red" th:if="${param.error}">Неверный логин или пароль</p>
         <p>
-            <label for="username" class="screenreader">Username</label>
-            <input type="text" id="username" name="username" placeholder="Username" required="" autofocus="">
+            <label for="username" class="screenreader">Логин</label>
+            <input type="text" id="username" name="username" placeholder="Ваш логин" required="" autofocus="">
         </p>
         <p>
-            <label for="password" class="screenreader">Password</label>
-            <input type="password" id="password" name="password" placeholder="Password" required="">
+            <label for="password" class="screenreader">Пароль</label>
+            <input type="password" id="password" name="password" placeholder="Ваш пароль" required="">
         </p>
 
-        <button type="submit" class="primary">Sign in</button>
-        <a href="/signup">I don't have an account</a>
+        <button type="submit" class="primary">Войти</button>
+        <a href="/signup">У меня еще нету аккаунта</a>
     </form>
 
 

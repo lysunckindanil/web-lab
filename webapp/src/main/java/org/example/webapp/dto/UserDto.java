@@ -1,11 +1,8 @@
 package org.example.webapp.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import org.example.webapp.util.UniqueUsername;
 
 import java.io.Serializable;
 
@@ -13,16 +10,12 @@ import java.io.Serializable;
  * DTO for {@link org.example.webapp.model.User}
  */
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+@Data
 public class UserDto implements Serializable {
-    @Size(min = 4, max = 20, message = "Username should be between 4 and 20 characters.")
-    @NotEmpty(message = "Username should not be empty.")
+    @Size(min = 4, max = 20, message = "Логин должен быть от 4 до 20 символов")
+    @UniqueUsername(message = "Логин занят другим пользователем")
     private String username;
 
-    @Size(min = 4, max = 20, message = "Password should be between 4 and 20 characters.")
-    @NotEmpty(message = "Password should not be empty.")
+    @Size(min = 4, max = 20, message = "Логин должен быть от 4 до 20 символов")
     private String password;
 }
