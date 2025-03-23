@@ -25,7 +25,7 @@ public class CommentRestClientImpl implements CommentRestClient {
         try {
             return restClient
                     .post()
-                    .uri("/api/v1/comment/getByIssue")
+                    .uri("/getByIssue")
                     .body(dto)
                     .contentType(MediaType.APPLICATION_JSON)
                     .retrieve()
@@ -40,7 +40,7 @@ public class CommentRestClientImpl implements CommentRestClient {
         try {
             restClient
                     .post()
-                    .uri("/api/v1/comment/create")
+                    .uri("/create")
                     .body(dto)
                     .contentType(MediaType.APPLICATION_JSON)
                     .retrieve()
@@ -55,7 +55,7 @@ public class CommentRestClientImpl implements CommentRestClient {
         try {
             restClient
                     .post()
-                    .uri("/api/v1/comment/delete")
+                    .uri("/delete")
                     .body(dto)
                     .contentType(MediaType.APPLICATION_JSON)
                     .retrieve()

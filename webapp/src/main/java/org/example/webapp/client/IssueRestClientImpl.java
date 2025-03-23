@@ -25,7 +25,7 @@ public class IssueRestClientImpl implements IssueRestClient {
     public List<IssueDto> getIssues() {
         return restClient
                 .get()
-                .uri("/api/v1/issue")
+                .uri("")
                 .retrieve()
                 .body(ISSUE_LIST_TYPE);
     }
@@ -35,7 +35,7 @@ public class IssueRestClientImpl implements IssueRestClient {
         try {
             return restClient
                     .post()
-                    .uri("/api/v1/issue/getById")
+                    .uri("/getById")
                     .body(dto)
                     .contentType(MediaType.APPLICATION_JSON)
                     .retrieve()
@@ -50,7 +50,7 @@ public class IssueRestClientImpl implements IssueRestClient {
         try {
             restClient
                     .post()
-                    .uri("/api/v1/issue/create")
+                    .uri("/create")
                     .body(dto)
                     .contentType(MediaType.APPLICATION_JSON)
                     .retrieve()
@@ -65,7 +65,7 @@ public class IssueRestClientImpl implements IssueRestClient {
         try {
             restClient
                     .post()
-                    .uri("/api/v1/issue/delete")
+                    .uri("/delete")
                     .body(dto)
                     .contentType(MediaType.APPLICATION_JSON)
                     .retrieve()
