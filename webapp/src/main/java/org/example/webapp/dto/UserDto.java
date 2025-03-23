@@ -3,7 +3,7 @@ package org.example.webapp.dto;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
-import org.example.webapp.util.UniqueUsername;
+import org.example.webapp.util.validation.UniqueUsername;
 
 import java.io.Serializable;
 

@@ -1,29 +1,33 @@
-package org.example.webapp.service;
+package org.example.webapp.service.issue;
 
 import lombok.RequiredArgsConstructor;
 import org.example.webapp.client.IssueRestClient;
 import org.example.webapp.dto.forum.issue.*;
+import org.example.webapp.model.User;
+import org.example.webapp.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class IssueService {
+public class IssueServiceImpl implements IssueService {
     private final IssueRestClient issueRestClient;
-    private final UserDetailsService userDetailsService;
+    private final UserService userService;
 
+    @Override
     public List<IssueDto> getIssues() {
         return validateAll(issueRestClient.getIssues());
     }
 
+    @Override
     public IssueDto getById(Long id) {
         GetIssueByIdApiDto getByIdDto = GetIssueByIdApiDto.builder().issueId(id).build();
         return validate(issueRestClient.getById(getByIdDto));
     }
 
+    @Override
     public void create(CreateIssueDto issue) {
         CreateIssueApiDto request = CreateIssueApiDto.builder()
                 .author(SecurityContextHolder.getContext().getAuthentication().getName())
@@ -33,6 +37,7 @@ public class IssueService {
         issueRestClient.create(request);
     }
 
+    @Override
     public void delete(DeleteIssueDto issue) {
         DeleteIssueApiDto request = DeleteIssueApiDto.builder()
                 .issueId(issue.getIssueId())
@@ -43,21 +48,21 @@ public class IssueService {
 
     private IssueDto validate(IssueDto issueDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (userDetailsService.loadUserByUsername(username)
-                .getAuthorities()
-                .stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))
-        ) issueDto.setCanDelete(true);
+        User user = userService.loadUserByUsername(username);
+        if (user == null) return null;
+
+        if (user.hasRole("ROLE_REDACTOR")) issueDto.setCanDelete(true);
         else if (issueDto.getAuthorUsername().equals(username)) issueDto.setCanDelete(true);
+
         return issueDto;
     }
 
     private List<IssueDto> validateAll(List<IssueDto> issues) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (userDetailsService.loadUserByUsername(username)
-                .getAuthorities()
-                .stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))) {
+        User user = userService.loadUserByUsername(username);
+        if (user == null) return null;
+
+        if (user.hasRole("ROLE_REDACTOR")) {
             for (IssueDto issue : issues) {
                 issue.setCanDelete(true);
 
@@ -68,6 +73,7 @@ public class IssueService {
         for (IssueDto issue : issues) {
             if (issue.getAuthorUsername().equals(username)) issue.setCanDelete(true);
         }
+
         return issues;
     }
 }

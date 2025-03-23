@@ -44,6 +44,10 @@ public class User implements Serializable, UserDetails {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).toList();
     }
 
+    public boolean hasRole(String name) {
+        return roles.stream().anyMatch(role -> role.getName().equals(name));
+    }
+
     @Override
     public boolean isEnabled() {
         return enabled;

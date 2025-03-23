@@ -1,4 +1,4 @@
-package org.example.webapp.util;
+package org.example.webapp.util.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

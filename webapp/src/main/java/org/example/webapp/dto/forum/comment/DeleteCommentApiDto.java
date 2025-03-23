@@ -1,6 +1,7 @@
 package org.example.webapp.dto.forum.comment;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.io.Serializable;
 

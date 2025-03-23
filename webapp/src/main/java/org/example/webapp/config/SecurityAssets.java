@@ -11,5 +11,4 @@ public class SecurityAssets {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

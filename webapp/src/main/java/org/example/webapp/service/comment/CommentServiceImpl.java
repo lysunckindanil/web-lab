@@ -1,26 +1,29 @@
-package org.example.webapp.service;
+package org.example.webapp.service.comment;
 
 import lombok.RequiredArgsConstructor;
 import org.example.webapp.client.CommentRestClient;
 import org.example.webapp.dto.forum.comment.*;
+import org.example.webapp.model.User;
+import org.example.webapp.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CommentService {
+public class CommentServiceImpl implements CommentService {
     private final CommentRestClient commentRestClient;
-    private final UserDetailsService userDetailsService;
+    private final UserService userService;
 
+    @Override
     public List<CommentDto> getByIssueId(Long issueId) {
         GetCommentsByIssueApiDto request = GetCommentsByIssueApiDto.builder()
                 .issueId(issueId).build();
         return validateAll(commentRestClient.getByIssue(request));
     }
 
+    @Override
     public void create(CreateCommentDto dto) {
         CreateCommentApiDto request = CreateCommentApiDto.builder()
                 .content(dto.getContent())
@@ -30,6 +33,7 @@ public class CommentService {
         commentRestClient.create(request);
     }
 
+    @Override
     public void delete(DeleteCommentDto dto) {
         DeleteCommentApiDto request = DeleteCommentApiDto.builder()
                 .commentId(dto.getCommentId())
@@ -40,10 +44,10 @@ public class CommentService {
 
     private List<CommentDto> validateAll(List<CommentDto> comments) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (userDetailsService.loadUserByUsername(username)
-                .getAuthorities()
-                .stream()
-                .anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))) {
+        User user = userService.loadUserByUsername(username);
+        if (user == null) return null;
+
+        if (user.hasRole("ROLE_REDACTOR")) {
             for (CommentDto comment : comments) {
                 comment.setCanDelete(true);
             }

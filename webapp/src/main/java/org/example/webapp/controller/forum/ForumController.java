@@ -2,7 +2,7 @@ package org.example.webapp.controller.forum;
 
 import lombok.RequiredArgsConstructor;
 import org.example.webapp.model.User;
-import org.example.webapp.service.IssueService;
+import org.example.webapp.service.issue.IssueService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

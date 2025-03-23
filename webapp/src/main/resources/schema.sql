@@ -67,3 +67,20 @@ WHERE u.username = 'user'
                   FROM users_roles ur
                   WHERE ur.user_id = u.id
                     AND ur.role_id = r.id);
+
+
+INSERT INTO users (username, password)
+SELECT 'redactor', '$2a$10$rgOVlIFwz8ig6KXWRcdNHeywm/qo2HSd1TFFtgNH/9Ucd/yEqRo/y'
+FROM DUAL
+WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'redactor');
+
+INSERT INTO users_roles (user_id, role_id)
+SELECT u.id, r.id
+FROM users u,
+     roles r
+WHERE u.username = 'redactor'
+  AND r.name IN ('ROLE_REDACTOR', 'ROLE_USER')
+  AND NOT EXISTS (SELECT 1
+                  FROM users_roles ur
+                  WHERE ur.user_id = u.id
+                    AND ur.role_id = r.id);

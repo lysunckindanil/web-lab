@@ -3,7 +3,7 @@ package org.example.webapp.controller.forum;
 import lombok.RequiredArgsConstructor;
 import org.example.webapp.dto.forum.comment.CreateCommentDto;
 import org.example.webapp.dto.forum.comment.DeleteCommentDto;
-import org.example.webapp.service.CommentService;
+import org.example.webapp.service.comment.CommentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
