@@ -2,7 +2,7 @@ package org.example.webapp.controller.forum;
 
 import lombok.RequiredArgsConstructor;
 import org.example.webapp.model.User;
-import org.example.webapp.service.ForumService;
+import org.example.webapp.service.IssueService;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +17,11 @@ import java.security.Principal;
 public class ForumController {
 
     private final UserDetailsService userDetailsService;
-    private final ForumService forumService;
+    private final IssueService issueService;
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("issues", forumService.getIssues());
-        model.addAttribute("isRedactor", forumService.isRedactor());
+        model.addAttribute("issues", issueService.getIssues());
         return "forum/index";
     }
 

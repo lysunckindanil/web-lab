@@ -1,15 +1,13 @@
 package org.example.webapp.dto.forum.issue;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 import java.io.Serializable;
 
 
+@Data
 @Builder
-@AllArgsConstructor
-@Getter
 public class DeleteIssueDto implements Serializable {
     private final Long issueId;
 }

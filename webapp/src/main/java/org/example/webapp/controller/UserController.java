@@ -23,7 +23,7 @@ public class UserController {
 
     @GetMapping("/signup")
     public String signup(Model model) {
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", UserDto.builder().build());
         return "auth/signup";
     }
 
@@ -34,7 +34,7 @@ public class UserController {
 
         userService.register(userDto.getUsername(), userDto.getPassword());
         model.addAttribute("success", true);
-        model.addAttribute("user", new UserDto());
+        model.addAttribute("user", UserDto.builder().build());
         return "auth/signup";
     }
 }

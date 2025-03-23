@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.webapp.dto.forum.issue.CreateIssueDto;
 import org.example.webapp.dto.forum.issue.DeleteIssueDto;
 import org.example.webapp.service.CommentService;
-import org.example.webapp.service.ForumService;
 import org.example.webapp.service.IssueService;
 import org.example.webapp.util.BadRequestException;
 import org.springframework.http.ResponseEntity;
@@ -19,19 +18,23 @@ import org.springframework.web.bind.annotation.*;
 public class IssueController {
     private final IssueService issueService;
     private final CommentService commentService;
-    private final ForumService forumService;
 
     @GetMapping("/{id}")
-    public String issue(@PathVariable("id") Long issueId, Model model) {
-        model.addAttribute("issue", issueService.getById(issueId));
-        model.addAttribute("comments", commentService.getByIssueId(issueId));
-        model.addAttribute("isRedactor", forumService.isRedactor());
+    public String issue(@PathVariable("id") String issueIdStr, Model model) {
+        try {
+            Long issueId = Long.parseLong(issueIdStr);
+            model.addAttribute("issue", issueService.getById(issueId));
+            model.addAttribute("comments", commentService.getByIssueId(issueId));
+        } catch (Exception e) {
+            return "redirect:/forum";
+        }
+
         return "forum/issue/index";
     }
 
     @GetMapping("/create")
     public String createForm(Model model) {
-        model.addAttribute("issue", new CreateIssueDto());
+        model.addAttribute("issue", CreateIssueDto.builder().build());
         return "forum/issue/create";
     }
 

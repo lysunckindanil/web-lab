@@ -1,20 +1,24 @@
 package org.example.webapp.dto.forum.comment;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-@Getter
-@AllArgsConstructor
+@Data
+@Builder
 public class CommentDto implements Serializable {
     private Long id;
     private String content;
     private LocalDateTime createdAt;
     private String authorUsername;
+
+    @JsonIgnore
+    private boolean canDelete;
 
     public String getCreatedAtFormatted() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");

@@ -41,7 +41,7 @@
                     <p>Дата публикации: <span th:text="${issue.getCreatedAtFormatted()}"></span></p>
                     <p>Автор: <span th:text="${issue.getAuthorUsername()}"></span></p>
                     <button class="danger"
-                            th:if="${isRedactor || #authentication.getName() == issue.getAuthorUsername()}"
+                            th:if="${issue.isCanDelete()}"
                             th:value="${issue.getId()}"
                             onclick="deleteIssueIndex(this.value)">Удалить
                     </button>
@@ -68,7 +68,7 @@
                 <h3 th:text="${comment.getAuthorUsername()}">title</h3>
                 <p th:text="${comment.getContent()}">content</p>
                 <p>Дата публикации: <span th:text="${comment.getCreatedAtFormatted()}"></span></p>
-                <button class="danger" th:if="${isRedactor || #authentication.getName() == comment.getAuthorUsername()}"
+                <button class="danger" th:if="${comment.isCanDelete()}"
                         th:value="${comment.getId()}"
                         onclick="deleteComment(this.value)">Удалить
                 </button>
