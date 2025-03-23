@@ -20,18 +20,3 @@ create table if not exists users_roles
     role_id bigint not null references roles (id),
     primary key (user_id, role_id)
 );
-
-INSERT INTO roles (name)
-SELECT 'ROLE_ADMIN'
-FROM DUAL
-WHERE NOT EXISTS (SELECT 1 FROM roles WHERE name = 'ROLE_ADMIN');
-
-INSERT INTO roles (name)
-SELECT 'ROLE_USER'
-FROM DUAL
-WHERE NOT EXISTS (SELECT 1 FROM roles WHERE name = 'ROLE_USER');
-
-INSERT INTO roles (name)
-SELECT 'ROLE_REDACTOR'
-FROM DUAL
-WHERE NOT EXISTS (SELECT 1 FROM roles WHERE name = 'ROLE_REDACTOR');
