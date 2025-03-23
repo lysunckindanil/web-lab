@@ -50,8 +50,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void delete(DeleteCommentDto dto) {
         Comment comment = commentRepository.findById(dto.getCommentId()).get();
-
         User user = userService.findByUsername(dto.getUsername()).get();
+
         if (comment.getAuthor().equals(user)) {
             commentRepository.delete(comment);
         } else if (user.getRoles().stream().map(Role::getName).anyMatch(role -> role.equals("ROLE_REDACTOR") || role.equals("ROLE_ADMIN"))) {

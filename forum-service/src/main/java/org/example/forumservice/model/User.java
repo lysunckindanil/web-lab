@@ -28,8 +28,10 @@ public class User implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = {
-                    @JoinColumn(name = "user_id", referencedColumnName = "id")},
+                    @JoinColumn(name = "user_id", referencedColumnName = "id",
+                    nullable = false)},
             inverseJoinColumns = {
-                    @JoinColumn(name = "role_id", referencedColumnName = "id")})
+                    @JoinColumn(name = "role_id", referencedColumnName = "id",
+                    nullable = false)})
     List<Role> roles = new ArrayList<>();
 }
