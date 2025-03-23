@@ -13,16 +13,21 @@ import org.example.forumservice.repo.RoleRepository;
 import org.example.forumservice.repo.UserRepository;
 import org.example.forumservice.service.comment.CommentService;
 import org.example.forumservice.util.BadRequestException;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 
 @ActiveProfiles("test")
+@Transactional
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -34,9 +39,9 @@ class CommentServiceTest {
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
-    private CommentService commentService;
-    @Autowired
     private IssueRepository issueRepository;
+    @Autowired
+    private CommentService commentService;
 
     @BeforeAll
     public void setUp() {
@@ -68,12 +73,6 @@ class CommentServiceTest {
             admin.setRoles(List.of(role2));
             userRepository.save(admin);
         }
-    }
-
-    @AfterEach
-    public void cleanUp() {
-        commentRepository.deleteAll();
-        issueRepository.deleteAll();
     }
 
 

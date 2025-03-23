@@ -2,9 +2,9 @@ package org.example.webapp.service;
 
 import org.example.webapp.dto.UserDto;
 import org.example.webapp.model.User;
+import org.example.webapp.repo.RoleRepository;
 import org.example.webapp.repo.UserRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,27 +13,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @ActiveProfiles("test")
 @SpringBootTest
+@Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class UserServiceTest {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    RoleRepository roleRepository;
+    @Autowired
     UserService userService;
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @BeforeEach
-    public void tearDown() {
-        userRepository.deleteAll();
-    }
 
     @Test
     void loadUserByUsername() {

@@ -13,7 +13,6 @@ import org.example.forumservice.repo.IssueRepository;
 import org.example.forumservice.repo.RoleRepository;
 import org.example.forumservice.repo.UserRepository;
 import org.example.forumservice.service.comment.CommentService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -27,12 +26,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @ActiveProfiles("test")
+@Transactional
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -64,13 +65,6 @@ class CommentControllerTest {
             user.setPassword("secret");
             userRepository.save(user);
         }
-    }
-
-
-    @AfterEach
-    public void beforeEach() {
-        commentRepository.deleteAll();
-        issueRepository.deleteAll();
     }
 
     public Issue getIssue(String name) {

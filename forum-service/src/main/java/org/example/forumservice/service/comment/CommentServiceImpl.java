@@ -68,7 +68,9 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteAll(commentRepository.getByIssue(issue));
     }
 
+
     @Autowired
+    @Override
     public void setIssueService(@Lazy IssueService issueService) {
         this.issueService = issueService;
     }
