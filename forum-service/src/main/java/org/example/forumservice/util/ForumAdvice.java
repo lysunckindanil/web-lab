@@ -17,7 +17,7 @@ public class ForumAdvice {
     }
 
     @ExceptionHandler({HttpMessageConversionException.class})
-    public ResponseEntity<?> handleHttpMessageConversionException(HttpMessageConversionException e) {
+    public ResponseEntity<?> handleHttpMessageConversionException() {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, HttpMessageConversionException.class.getName());
         problemDetail.setProperty("error", "JSON parsing error");
         return ResponseEntity.badRequest().body(problemDetail);

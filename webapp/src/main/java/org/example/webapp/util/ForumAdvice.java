@@ -1,11 +1,15 @@
 package org.example.webapp.util;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.io.IOException;
+import java.nio.channels.ClosedChannelException;
 
 @ControllerAdvice
 public class ForumAdvice {
@@ -17,9 +21,14 @@ public class ForumAdvice {
     }
 
     @ExceptionHandler({HttpMessageConversionException.class})
-    public ResponseEntity<?> handleHttpMessageConversionException(HttpMessageConversionException e) {
+    public ResponseEntity<?> handleHttpMessageConversionException() {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, HttpMessageConversionException.class.getName());
         problemDetail.setProperty("error", "JSON parsing error");
         return ResponseEntity.badRequest().body(problemDetail);
+    }
+
+    @ExceptionHandler({ClosedChannelException.class})
+    public void handleClosedChannelException(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/");
     }
 }
