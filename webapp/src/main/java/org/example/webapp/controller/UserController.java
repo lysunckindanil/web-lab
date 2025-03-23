@@ -32,7 +32,7 @@ public class UserController {
         if (bindingResult.hasErrors())
             return "auth/signup";
 
-        userService.register(userDto.getUsername(), userDto.getPassword());
+        userService.register(userDto);
         model.addAttribute("success", true);
         model.addAttribute("user", UserDto.builder().build());
         return "auth/signup";

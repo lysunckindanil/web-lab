@@ -2,7 +2,6 @@ package org.example.webapp.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -11,7 +10,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
 @Table(name = "roles")
 public class Role implements Serializable {
     @Id
@@ -24,10 +22,6 @@ public class Role implements Serializable {
     @Override
     public String toString() {
         return name;
-    }
-
-    public Role(String name) {
-        this.name = name;
     }
 
     @Override

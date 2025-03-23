@@ -1,6 +1,7 @@
 package org.example.webapp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.webapp.dto.UserDto;
 import org.example.webapp.model.User;
 import org.example.webapp.repo.RoleRepository;
 import org.example.webapp.repo.UserRepository;
@@ -34,10 +35,10 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void register(String username, String password) {
+    public void register(UserDto dto) {
         User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setUsername(dto.getUsername());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.getRoles().add(roleRepository.findByName("ROLE_USER"));
         userRepository.save(user);
     }

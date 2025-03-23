@@ -44,7 +44,9 @@ public class IssueService {
     private IssueDto validate(IssueDto issueDto) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (userDetailsService.loadUserByUsername(username)
-                .getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))
+                .getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))
         ) issueDto.setCanDelete(true);
         else if (issueDto.getAuthorUsername().equals(username)) issueDto.setCanDelete(true);
         return issueDto;
@@ -53,7 +55,9 @@ public class IssueService {
     private List<IssueDto> validateAll(List<IssueDto> issues) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (userDetailsService.loadUserByUsername(username)
-                .getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))) {
+                .getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))) {
             for (IssueDto issue : issues) {
                 issue.setCanDelete(true);
 

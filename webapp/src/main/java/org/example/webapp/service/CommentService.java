@@ -41,7 +41,9 @@ public class CommentService {
     private List<CommentDto> validateAll(List<CommentDto> comments) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (userDetailsService.loadUserByUsername(username)
-                .getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))) {
+                .getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_REDACTOR"))) {
             for (CommentDto comment : comments) {
                 comment.setCanDelete(true);
             }
