@@ -2,11 +2,13 @@ package org.example.webapp.dto.forum.issue;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
-@ToString
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 public class DeleteIssueApiDto implements Serializable {

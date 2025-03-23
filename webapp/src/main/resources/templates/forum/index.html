@@ -41,7 +41,7 @@
                     </p>
                     <p>Дата публикации: <span th:text="${issue.getCreatedAtFormatted()}"></span></p>
                 </a>
-                <button class="danger" th:if="${isRedactor}" th:value="${issue.getId()}"
+                <button class="danger" th:if="${isRedactor || #authentication.getName() == issue.getAuthorUsername()}" th:value="${issue.getId()}"
                         onclick="deleteIssue(this.value)">Удалить
                 </button>
             </li>

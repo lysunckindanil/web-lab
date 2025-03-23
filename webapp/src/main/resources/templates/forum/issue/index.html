@@ -35,11 +35,14 @@
         <ul>
             <li>
                 <div>
+                    <p hidden="hidden" th:id="issueId" th:value="${issue.getId()}"></p>
                     <h3 th:text="${issue.getTitle()}">title</h3>
                     <p th:text="${issue.getDescription()}">description</p>
                     <p>Дата публикации: <span th:text="${issue.getCreatedAtFormatted()}"></span></p>
                     <p>Автор: <span th:text="${issue.getAuthorUsername()}"></span></p>
-                    <button class="danger" th:if="${isRedactor}" th:value="${issue.getId()}"
+                    <button class="danger"
+                            th:if="${isRedactor || #authentication.getName() == issue.getAuthorUsername()}"
+                            th:value="${issue.getId()}"
                             onclick="deleteIssueIndex(this.value)">Удалить
                     </button>
                 </div>
@@ -49,17 +52,15 @@
         <h2>Комментарии</h2>
 
         <div>
-            <form class="form-style-1">
-            <textarea
-                    class="form-control field-long"
-                    id="exampleFormControlTextarea1"
-                    rows="4"
-                    placeholder="Ваш комментарий"
-            ></textarea>
-
-                <input type="submit" value="Оставить комментарий"/>
-            </form>
-
+            <div class="form-style-1">
+                <p style="color: red" hidden="hidden" id="createCommentError"></p>
+                <textarea
+                        class="form-control field-long"
+                        id="textareaComment"
+                        rows="4"
+                        placeholder="Ваш комментарий"></textarea>
+                <button th:value="${issue.getId()}" onclick="createComment1(this.value)">Оставить комментарий</button>
+            </div>
         </div>
 
         <ul>
@@ -67,7 +68,8 @@
                 <h3 th:text="${comment.getAuthorUsername()}">title</h3>
                 <p th:text="${comment.getContent()}">content</p>
                 <p>Дата публикации: <span th:text="${comment.getCreatedAtFormatted()}"></span></p>
-                <button class="danger" th:if="${isRedactor}" th:value="${comment.getId()}"
+                <button class="danger" th:if="${isRedactor || #authentication.getName() == comment.getAuthorUsername()}"
+                        th:value="${comment.getId()}"
                         onclick="deleteComment(this.value)">Удалить
                 </button>
             </li>

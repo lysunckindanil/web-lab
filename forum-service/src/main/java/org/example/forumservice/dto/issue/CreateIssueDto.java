@@ -1,5 +1,6 @@
 package org.example.forumservice.dto.issue;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +17,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 public class CreateIssueDto implements Serializable {
-    @NotEmpty
+    @NotBlank(message = "Название не должно быть пустым")
     private final String title;
-    @NotEmpty
+    @NotBlank(message = "Описание не должно быть пустым")
     private final String description;
     @NotEmpty
     @UserExists

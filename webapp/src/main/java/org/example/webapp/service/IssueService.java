@@ -1,34 +1,25 @@
 package org.example.webapp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.webapp.client.IssueRestClient;
 import org.example.webapp.dto.forum.issue.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class IssueService {
+    private final IssueRestClient issueRestClient;
 
     public List<IssueDto> getIssues() {
-        IssueDto issueDto = new IssueDto(1L, "title1", "description1", LocalDateTime.now(), "user1");
-        IssueDto issueDto1 = new IssueDto(2L, "title2", "description2", LocalDateTime.now(), "user2");
-        IssueDto issueDto2 = new IssueDto(3L, "title3", "description3", LocalDateTime.now(), "user3");
-        IssueDto issueDto3 = new IssueDto(4L, "title4", "Описание: Вихрь Идей с гордостью объявляет о запуске программы\n" +
-                "              менторства для талантливых молодых дизайнеров! Программа\n" +
-                "              предоставит уникальную возможность обучения под руководством\n" +
-                "              опытных специалистов компании. Участники получат ценные знания и\n" +
-                "              практический опыт, помогающие им развивать свои навыки и строить\n" +
-                "              успешную карьеру. Заявки принимаются до 15 октября.", LocalDateTime.now(), "user4");
-        return List.of(issueDto, issueDto1, issueDto2, issueDto3);
+        return issueRestClient.getIssues();
     }
 
     public IssueDto getById(Long id) {
         GetIssueByIdApiDto getByIdDto = GetIssueByIdApiDto.builder().issueId(id).build();
-
-        return new IssueDto(1L, "title1", "description1", LocalDateTime.now(), "user1");
+        return issueRestClient.getById(getByIdDto);
     }
 
     public void create(CreateIssueDto issue) {
@@ -37,6 +28,7 @@ public class IssueService {
                 .title(issue.getTitle())
                 .description(issue.getDescription())
                 .build();
+        issueRestClient.create(request);
     }
 
     public void delete(DeleteIssueDto issue) {
@@ -44,6 +36,6 @@ public class IssueService {
                 .issueId(issue.getIssueId())
                 .username(SecurityContextHolder.getContext().getAuthentication().getName())
                 .build();
-        System.out.println(request);
+        issueRestClient.delete(request);
     }
 }

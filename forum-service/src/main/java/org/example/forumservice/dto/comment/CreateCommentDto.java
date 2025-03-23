@@ -19,7 +19,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 public class CreateCommentDto implements Serializable {
-    @NotBlank
+    @NotBlank(message = "Содержание комментария не должно быть пустым")
     private final String content;
     @IssueExists
     private final Long issueId;

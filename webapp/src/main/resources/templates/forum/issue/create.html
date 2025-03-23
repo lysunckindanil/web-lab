@@ -31,13 +31,12 @@
         <form class="form-style-1" th:action="@{/forum/issue/create}" th:method="post"
               th:object="${issue}">
             <p style="color: green" th:if="${success}">Вы успешно создали вопрос!</p>
-            <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+            <div style="color: red" th:if="${error}" th:text="${error}"></div>
             <label>Название</label>
             <input class="field-long" type="text" id="exampleInputName" th:field="*{title}"
                    placeholder="Придумайте название вышей проблемы"
                    autofocus=""/>
 
-            <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
             <label>Описание</label>
             <textarea
                     class="form-control field-long"

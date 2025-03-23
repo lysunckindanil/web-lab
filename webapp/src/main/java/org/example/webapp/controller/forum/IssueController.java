@@ -1,7 +1,6 @@
 package org.example.webapp.controller.forum;
 
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.webapp.dto.forum.issue.CreateIssueDto;
 import org.example.webapp.dto.forum.issue.DeleteIssueDto;
@@ -9,9 +8,9 @@ import org.example.webapp.service.CommentService;
 import org.example.webapp.service.ForumService;
 import org.example.webapp.service.IssueService;
 import org.example.webapp.util.BadRequestException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -37,19 +36,21 @@ public class IssueController {
     }
 
     @PostMapping("/create")
-    public String create(@Valid @ModelAttribute("issue") CreateIssueDto issue, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors())
+    public String create(@ModelAttribute("issue") CreateIssueDto issue, Model model) {
+        try {
+            issueService.create(issue);
+        } catch (BadRequestException e) {
+            model.addAttribute("error", e.getMessage());
             return "forum/issue/create";
+        }
         model.addAttribute("success", true);
-        issueService.create(issue);
         return "forum/issue/create";
     }
 
+    @ResponseBody
     @PostMapping("/delete")
-    public String create(@Valid @ModelAttribute DeleteIssueDto dto, BindingResult bindingResult) {
-        if (bindingResult.hasErrors())
-            throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
+    public ResponseEntity<Void> delete(DeleteIssueDto dto) {
         issueService.delete(dto);
-        return "redirect:/forum";
+        return ResponseEntity.noContent().build();
     }
 }

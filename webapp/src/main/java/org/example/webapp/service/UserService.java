@@ -1,8 +1,6 @@
 package org.example.webapp.service;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.example.webapp.model.Role;
 import org.example.webapp.model.User;
 import org.example.webapp.repo.RoleRepository;
 import org.example.webapp.repo.UserRepository;
@@ -23,29 +21,6 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-
-    @PostConstruct
-    public void init() {
-        if (roleRepository.findByName("ROLE_ADMIN") == null) {
-            roleRepository.save(new Role("ROLE_ADMIN"));
-        }
-        if (roleRepository.findByName("ROLE_USER") == null) {
-            roleRepository.save(new Role("ROLE_USER"));
-        }
-        if (roleRepository.findByName("ROLE_REDACTOR") == null) {
-            roleRepository.save(new Role("ROLE_REDACTOR"));
-        }
-
-        if (userRepository.getByUsername("admin").isEmpty()) {
-            User admin = new User();
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("secret"));
-            admin.getRoles().add(roleRepository.findByName("ROLE_ADMIN"));
-            admin.getRoles().add(roleRepository.findByName("ROLE_USER"));
-            admin.getRoles().add(roleRepository.findByName("ROLE_REDACTOR"));
-            userRepository.save(admin);
-        }
-    }
 
     public List<User> findAll() {
         return userRepository.findAll();
