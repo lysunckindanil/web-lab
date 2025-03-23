@@ -27,7 +27,7 @@ class UserServiceTest {
     @Test
     void loadUserByUsername() {
         User user = new User();
-        user.setUsername("user");
+        user.setUsername("test_user");
         user.setPassword(passwordEncoder.encode("password"));
         userRepository.save(user);
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());

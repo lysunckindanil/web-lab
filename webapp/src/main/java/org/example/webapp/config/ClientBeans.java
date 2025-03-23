@@ -10,13 +10,13 @@ import org.springframework.web.client.RestClient;
 @Configuration
 public class ClientBeans {
     @Bean
-    public IssueRestClientImpl issueRestClient(@Value("${issues.client.base-url}") String baseUrl) {
+    public IssueRestClientImpl issueRestClient(@Value("${issues.client.base-url:http://localhost:1337}") String baseUrl) {
         return new IssueRestClientImpl(RestClient.builder()
                 .baseUrl(baseUrl).build());
     }
 
     @Bean
-    public CommentRestClientImpl commentRestClient(@Value("${comments.client.base-url}") String baseUrl) {
+    public CommentRestClientImpl commentRestClient(@Value("${comments.client.base-url:http://localhost:1337}") String baseUrl) {
         return new CommentRestClientImpl(RestClient.builder()
                 .baseUrl(baseUrl).build());
     }

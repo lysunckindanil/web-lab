@@ -1,0 +1,38 @@
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: webapp_db
+      MYSQL_USER: gen_user
+      MYSQL_PASSWORD: 1234
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: 1234
+
+  forum-service:
+    image:
+      docker.io/library/forum-service:0.0.1-SNAPSHOT
+    restart: always
+    environment:
+      MYSQL_DATABASE: webapp_db
+      MYSQL_USER: gen_user
+      MYSQL_PASSWORD: 1234
+
+  webapp:
+    image:
+      docker.io/library/webapp:0.0.1-SNAPSHOT
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      MYSQL_DATABASE: webapp_db
+      MYSQL_USER: gen_user
+      MYSQL_PASSWORD: 1234
