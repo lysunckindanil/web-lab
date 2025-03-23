@@ -40,3 +40,4 @@ create table if not exists comments
     issue_id   bigint                not null references issues (id),
     primary key (id)
 );
+
