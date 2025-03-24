@@ -60,4 +60,45 @@ class UserServiceTest {
         userService.register(userDto);
         assertTrue(userRepository.getByUsername("user").isPresent());
     }
+
+    @Test
+    void register_has_ROLE_USER() {
+        UserDto userDto = UserDto.builder()
+                .username("user")
+                .password("password")
+                .build();
+        userService.register(userDto);
+        assertEquals("ROLE_USER", userService.findByUsername("user")
+                .get().getRoles().getFirst().getName());
+    }
+
+    @Test
+    void grantAuthority_Call_Grants() {
+        User user = new User();
+        user.setUsername("user");
+        user.setPassword(passwordEncoder.encode("password"));
+        userRepository.save(user);
+
+        userService.grantAuthority("ROLE_USER", "user");
+
+        assertEquals(1, userService.findByUsername("user")
+                .get().getRoles().size());
+        assertEquals("ROLE_USER", userService.findByUsername("user")
+                .get().getRoles().getFirst().getName());
+    }
+
+
+    @Test
+    void revokeAuthority() {
+        User user = new User();
+        user.setUsername("user");
+        user.setPassword(passwordEncoder.encode("password"));
+        user.getRoles().add(roleRepository.findByName("ROLE_USER"));
+        userRepository.save(user);
+
+        userService.revokeAuthority("ROLE_USER", "user");
+
+        assertEquals(0, userService.findByUsername("user")
+                .get().getRoles().size());
+    }
 }
