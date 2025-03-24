@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +31,7 @@ public class Issue {
     @ManyToOne
     @JoinColumn(nullable = false, name = "author_id")
     private User author;
+
+    @OneToMany(mappedBy = "issue", orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 }

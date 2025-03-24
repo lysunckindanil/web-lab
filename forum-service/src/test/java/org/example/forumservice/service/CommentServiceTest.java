@@ -184,16 +184,6 @@ class CommentServiceTest {
         Assertions.assertEquals(1, commentRepository.count());
     }
 
-
-    @Test
-    void deleteAllByIssue() {
-        Issue issue = getIssue("user");
-        getComment(issue, "user");
-        getComment(issue, "user");
-        commentService.deleteAllByIssue(issue.getId());
-        Assertions.assertEquals(0, commentRepository.count());
-    }
-
     public Issue getIssue(String name) {
         Issue issue = new Issue();
         issue.setAuthor(userRepository.findByUsername(name).get());

@@ -45,7 +45,6 @@ class CommentControllerTest {
     private MockMvc mvc;
     @MockitoBean
     private CommentService commentService;
-
     @Autowired
     public IssueRepository issueRepository;
     @Autowired

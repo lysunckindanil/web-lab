@@ -27,8 +27,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @ActiveProfiles("test")
@@ -120,7 +118,6 @@ class IssueControllerTest {
     @Test
     void getById_CorrectData_ServiceCalled() throws Exception {
         Issue issue = getIssue("user");
-        Mockito.doReturn(Optional.of(issue)).when(issueService).findById(issue.getId());
         GetIssueByIdDto dto = GetIssueByIdDto
                 .builder()
                 .issueId(issue.getId())
@@ -131,7 +128,7 @@ class IssueControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto))
         ).andExpect(MockMvcResultMatchers.status().isOk());
-        Mockito.verify(issueService, Mockito.times(1)).findById((GetIssueByIdDto) Mockito.any());
+        Mockito.verify(issueService, Mockito.times(1)).findById(Mockito.any());
     }
 
     @Test

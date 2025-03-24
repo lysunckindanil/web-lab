@@ -4,25 +4,24 @@ import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
 import org.example.forumservice.dto.issue.GetIssueByIdDto;
 import org.example.forumservice.dto.issue.GetIssuesDto;
+import org.example.forumservice.model.Comment;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.Role;
 import org.example.forumservice.model.User;
+import org.example.forumservice.repo.CommentRepository;
 import org.example.forumservice.repo.IssueRepository;
 import org.example.forumservice.repo.RoleRepository;
 import org.example.forumservice.repo.UserRepository;
-import org.example.forumservice.service.comment.CommentService;
 import org.example.forumservice.service.issue.IssueService;
 import org.example.forumservice.util.BadRequestException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -40,10 +39,11 @@ class IssueServiceTest {
     private RoleRepository roleRepository;
     @Autowired
     private IssueRepository issueRepository;
-    @MockitoBean
-    private CommentService commentService;
+    @Autowired
+    private CommentRepository commentRepository;
     @Autowired
     private IssueService issueService;
+
 
     @BeforeAll
     public void setUp() {
@@ -80,7 +80,12 @@ class IssueServiceTest {
     @Test
     void findById() {
         Issue issue = getIssue("user");
-        Assertions.assertTrue(issueService.findById(issue.getId()).isPresent());
+        GetIssueByIdDto dto = GetIssueByIdDto.builder()
+                .issueId(issue.getId())
+                .username("user")
+                .build();
+        Assertions.assertNotNull(issueService.findById(dto));
+        Assertions.assertEquals(issue.getId(), issueService.findById(dto).getId());
     }
 
     @Test
@@ -161,54 +166,63 @@ class IssueServiceTest {
 
     @Test
     void delete_PretenderIsAuthor_Deletes() {
-        Mockito.doNothing().when(commentService).deleteAllByIssue(Mockito.any());
-
         Issue issue = getIssue("user");
         issueService.delete(DeleteIssueDto.builder()
                 .username("user")
                 .issueId(issue.getId())
                 .build());
-        Mockito.verify(commentService, Mockito.times(1)).deleteAllByIssue(Mockito.any());
         Assertions.assertEquals(0, issueRepository.count());
     }
 
+
     @Test
     void delete_PretenderIsRedactor_Deletes() {
-        Mockito.doNothing().when(commentService).deleteAllByIssue(Mockito.any());
-
         Issue issue = getIssue("user");
         issueService.delete(DeleteIssueDto.builder()
                 .username("redactor")
                 .issueId(issue.getId())
                 .build());
-        Mockito.verify(commentService, Mockito.times(1)).deleteAllByIssue(Mockito.any());
         Assertions.assertEquals(0, issueRepository.count());
     }
 
     @Test
     void delete_PretenderIsAdmin_Deletes() {
-        Mockito.doNothing().when(commentService).deleteAllByIssue(Mockito.any());
-
         Issue issue = getIssue("user");
         issueService.delete(DeleteIssueDto.builder()
                 .username("admin")
                 .issueId(issue.getId())
                 .build());
-        Mockito.verify(commentService, Mockito.times(1)).deleteAllByIssue(Mockito.any());
         Assertions.assertEquals(0, issueRepository.count());
     }
 
+
     @Test
     void delete_PretenderIsNotAuthorOrRedactorOrAdmin_ThrowsException() {
-        Mockito.doNothing().when(commentService).deleteAllByIssue(Mockito.any());
-
         Issue issue = getIssue("redactor");
         Assertions.assertThrows(BadRequestException.class, () -> issueService.delete(DeleteIssueDto.builder()
                 .username("user")
                 .issueId(issue.getId())
                 .build()));
-        Mockito.verify(commentService, Mockito.times(0)).deleteAllByIssue(Mockito.any());
         Assertions.assertEquals(1, issueRepository.count());
+    }
+
+
+    @Test
+    void delete_IssueWithComments_DeletesComments() {
+        Issue issue = getIssue("user");
+        Comment comment = getComment(issue, "user");
+        Comment comment1 = getComment(issue, "user");
+        issue.getComments().add(comment);
+        issue.getComments().add(comment1);
+        issueRepository.save(issue);
+
+        issueService.delete(DeleteIssueDto.builder()
+                .username("user")
+                .issueId(issue.getId())
+                .build());
+
+        Assertions.assertEquals(0, issueRepository.count());
+        Assertions.assertEquals(0, commentRepository.count());
     }
 
     public Issue getIssue(String name) {
@@ -217,6 +231,14 @@ class IssueServiceTest {
         issue.setTitle("title");
         issue.setDescription("description");
         return issueRepository.save(issue);
+    }
+
+    public Comment getComment(Issue issue, String name) {
+        Comment comment = new Comment();
+        comment.setAuthor(userRepository.findByUsername(name).get());
+        comment.setIssue(issue);
+        comment.setContent("content");
+        return commentRepository.save(comment);
     }
 
 }
