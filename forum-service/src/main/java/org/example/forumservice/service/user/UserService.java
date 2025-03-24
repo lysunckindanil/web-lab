@@ -9,3 +9,4 @@ public interface UserService {
 
     boolean isRedactor(String username);
 }
+

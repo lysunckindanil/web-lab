@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class IssueServiceImpl implements IssueService, GetIssueById {
+public class IssueServiceImpl implements IssueService {
     private final IssueRepository issueRepository;
     private final UserService userService;
 
@@ -23,11 +23,6 @@ public class IssueServiceImpl implements IssueService, GetIssueById {
     @Override
     public IssueDto findById(GetIssueByIdDto dto) {
         return toIssueDto(issueRepository.findById(dto.getIssueId()).get(), dto.getUsername());
-    }
-
-    @Override
-    public Issue getById(Long issueId) {
-        return issueRepository.findById(issueId).get();
     }
 
     @Override

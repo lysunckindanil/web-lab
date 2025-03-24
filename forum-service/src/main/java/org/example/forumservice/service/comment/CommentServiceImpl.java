@@ -9,7 +9,7 @@ import org.example.forumservice.model.Comment;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.User;
 import org.example.forumservice.repo.CommentRepository;
-import org.example.forumservice.service.issue.GetIssueById;
+import org.example.forumservice.service.issue.FindIssueById;
 import org.example.forumservice.service.user.UserService;
 import org.example.forumservice.util.BadRequestException;
 import org.springframework.beans.factory.ObjectProvider;
@@ -23,7 +23,7 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final UserService userService;
-    private final ObjectProvider<GetIssueById> getIssueById;
+    private final ObjectProvider<FindIssueById> getIssueById;
 
 
     @Override
@@ -37,7 +37,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = new Comment();
         comment.setContent(dto.getContent());
 
-        Issue issue = getIssueById.getObject().getById(dto.getIssueId());
+        Issue issue = getIssueById.getObject().find(dto.getIssueId());
         User user = userService.findByUsername(dto.getAuthorUsername()).get();
 
         comment.setIssue(issue);

@@ -17,3 +17,4 @@ public interface CommentService {
     @Transactional
     void delete(DeleteCommentDto dto);
 }
+
