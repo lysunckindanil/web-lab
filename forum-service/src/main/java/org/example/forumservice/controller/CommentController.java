@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/comment")
@@ -26,14 +27,14 @@ public class CommentController {
     @PostMapping("/getByIssue")
     public List<CommentDto> getByIssue(@Valid @RequestBody GetCommentsByIssueDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
+            throw new BadRequestException(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
         return commentService.getByIssue(dto);
     }
 
     @PostMapping("/create")
     public ResponseEntity<Void> create(@Valid @RequestBody CreateCommentDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
+            throw new BadRequestException(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
         commentService.create(dto);
         return ResponseEntity.noContent().build();
     }
@@ -41,7 +42,7 @@ public class CommentController {
     @PostMapping("/delete")
     public ResponseEntity<Void> delete(@Valid @RequestBody DeleteCommentDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
-            throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
+            throw new BadRequestException(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage());
         commentService.delete(dto);
         return ResponseEntity.noContent().build();
     }
