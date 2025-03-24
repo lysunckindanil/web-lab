@@ -9,4 +9,5 @@ import java.io.Serializable;
 @Builder
 public class GetCommentsByIssueApiDto implements Serializable {
     private final Long issueId;
+    private final String username;
 }

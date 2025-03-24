@@ -1,11 +1,17 @@
 package org.example.webapp.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.webapp.model.User;
+import org.example.webapp.repo.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.Optional;
 
 @Slf4j
 @EnableWebSecurity
@@ -31,5 +37,14 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/"));
         return http.build();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return username -> {
+            Optional<User> userOptional = userRepository.getByUsername(username);
+            if (userOptional.isEmpty()) throw new UsernameNotFoundException(username);
+            return userOptional.get();
+        };
     }
 }

@@ -5,9 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+
 @Data
 @Builder
-public class GetIssueByIdApiDto implements Serializable {
-    private final Long issueId;
+public class GetIssuesApiDto implements Serializable {
     private final String username;
 }

@@ -1,14 +1,11 @@
 package org.example.webapp.client;
 
-import org.example.webapp.dto.forum.issue.CreateIssueApiDto;
-import org.example.webapp.dto.forum.issue.DeleteIssueApiDto;
-import org.example.webapp.dto.forum.issue.GetIssueByIdApiDto;
-import org.example.webapp.dto.forum.issue.IssueDto;
+import org.example.webapp.dto.forum.issue.*;
 
 import java.util.List;
 
 public interface IssueRestClient {
-    List<IssueDto> getIssues();
+    List<IssueDto> getIssues(GetIssuesApiDto dto);
 
     IssueDto getById(GetIssueByIdApiDto dto);
 

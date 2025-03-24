@@ -84,9 +84,46 @@ class CommentServiceTest {
 
         Assertions.assertEquals(2, commentService.getByIssue(GetCommentsByIssueDto
                         .builder()
+                        .username("user")
                         .issueId(issue.getId())
                         .build())
                 .size());
+    }
+
+    @Test
+    void getByIssue_CanDeleteOnlyIfAuthor() {
+        Issue issue = getIssue("user");
+        getComment(issue, "user");
+        getComment(issue, "admin");
+
+
+        commentService.getByIssue(GetCommentsByIssueDto
+                .builder()
+                .username("user")
+                .issueId(issue.getId())
+                .build()).forEach(
+                comment -> {
+                    if (comment.getAuthorUsername().equals("admin"))
+                        Assertions.assertFalse(comment.getCanDelete());
+                    else Assertions.assertTrue(comment.getCanDelete());
+                }
+        );
+    }
+
+    @Test
+    void getByIssue_RedactorCanDeleteEverything() {
+        Issue issue = getIssue("user");
+        getComment(issue, "user");
+        getComment(issue, "admin");
+
+
+        commentService.getByIssue(GetCommentsByIssueDto
+                .builder()
+                .username("admin")
+                .issueId(issue.getId())
+                .build()).forEach(
+                comment -> Assertions.assertEquals(true, comment.getCanDelete())
+        );
     }
 
 

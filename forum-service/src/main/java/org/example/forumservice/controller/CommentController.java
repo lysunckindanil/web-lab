@@ -6,7 +6,6 @@ import org.example.forumservice.dto.comment.CommentDto;
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
 import org.example.forumservice.dto.comment.GetCommentsByIssueDto;
-import org.example.forumservice.model.Comment;
 import org.example.forumservice.service.comment.CommentService;
 import org.example.forumservice.util.BadRequestException;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +27,7 @@ public class CommentController {
     public List<CommentDto> getByIssue(@Valid @RequestBody GetCommentsByIssueDto dto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
-        return commentService.getByIssue(dto).stream().map(CommentController::toCommentDto).toList();
+        return commentService.getByIssue(dto);
     }
 
     @PostMapping("/create")
@@ -45,13 +44,5 @@ public class CommentController {
             throw new BadRequestException(bindingResult.getAllErrors().stream().findAny().get().getDefaultMessage());
         commentService.delete(dto);
         return ResponseEntity.noContent().build();
-    }
-
-    private static CommentDto toCommentDto(Comment comment) {
-        return CommentDto.builder()
-                .id(comment.getId())
-                .content(comment.getContent())
-                .authorUsername(comment.getAuthor().getUsername())
-                .createdAt(comment.getCreatedAt()).build();
     }
 }

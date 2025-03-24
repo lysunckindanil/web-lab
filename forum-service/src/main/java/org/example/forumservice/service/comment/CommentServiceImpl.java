@@ -1,6 +1,7 @@
 package org.example.forumservice.service.comment;
 
 import lombok.RequiredArgsConstructor;
+import org.example.forumservice.dto.comment.CommentDto;
 import org.example.forumservice.dto.comment.CreateCommentDto;
 import org.example.forumservice.dto.comment.DeleteCommentDto;
 import org.example.forumservice.dto.comment.GetCommentsByIssueDto;
@@ -17,6 +18,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,8 +30,8 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public List<Comment> getByIssue(GetCommentsByIssueDto dto) {
-        return commentRepository.getByIssue(issueService.findById(dto.getIssueId()).get());
+    public List<CommentDto> getByIssue(GetCommentsByIssueDto dto) {
+        return toCommentDtoAll(commentRepository.getByIssueId(dto.getIssueId()), dto.getUsername());
     }
 
     @Transactional
@@ -50,11 +52,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void delete(DeleteCommentDto dto) {
         Comment comment = commentRepository.findById(dto.getCommentId()).get();
-        User user = userService.findByUsername(dto.getUsername()).get();
 
-        if (comment.getAuthor().equals(user)) {
-            commentRepository.delete(comment);
-        } else if (user.getRoles().stream().map(Role::getName).anyMatch(role -> role.equals("ROLE_REDACTOR") || role.equals("ROLE_ADMIN"))) {
+        if (canDelete(comment, dto.getUsername())) {
             commentRepository.delete(comment);
         } else {
             throw new BadRequestException("Forbidden to delete comment");
@@ -64,10 +63,54 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public void deleteAllByIssue(Long issueId) {
-        Issue issue = issueService.findById(issueId).get();
-        commentRepository.deleteAll(commentRepository.getByIssue(issue));
+        commentRepository.deleteAll(commentRepository.getByIssueId(issueId));
     }
 
+    private boolean canDelete(Comment comment, String whoTries) {
+        User user = userService.findByUsername(whoTries).get();
+
+        if (comment.getAuthor().equals(user))
+            return true;
+
+        if (user.getRoles().stream().map(Role::getName).anyMatch(role -> role.equals("ROLE_REDACTOR") || role.equals("ROLE_ADMIN")))
+            return true;
+
+        return false;
+    }
+
+    private List<CommentDto> toCommentDtoAll(List<Comment> comments, String username) {
+        User user = userService.findByUsername(username).get();
+
+        List<CommentDto> commentDtos = new ArrayList<>();
+        if (user.getRoles().stream().map(Role::getName).anyMatch(role -> role.equals("ROLE_REDACTOR") || role.equals("ROLE_ADMIN"))) {
+            for (Comment comment : comments) {
+                commentDtos.add(
+                        CommentDto.builder()
+                                .id(comment.getId())
+                                .content(comment.getContent())
+                                .createdAt(comment.getCreatedAt())
+                                .authorUsername(comment.getAuthor().getUsername())
+                                .canDelete(true)
+                                .build()
+                );
+            }
+
+        } else {
+            for (Comment comment : comments) {
+                String authorUsername = comment.getAuthor().getUsername();
+                commentDtos.add(
+                        CommentDto.builder()
+                                .id(comment.getId())
+                                .content(comment.getContent())
+                                .createdAt(comment.getCreatedAt())
+                                .authorUsername(authorUsername)
+                                .canDelete(authorUsername.equals(username))
+                                .build()
+                );
+            }
+        }
+        return commentDtos;
+    }
 
     @Autowired
     @Override

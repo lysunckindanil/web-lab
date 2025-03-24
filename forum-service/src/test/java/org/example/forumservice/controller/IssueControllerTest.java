@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
 import org.example.forumservice.dto.issue.GetIssueByIdDto;
+import org.example.forumservice.dto.issue.GetIssuesDto;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.Role;
 import org.example.forumservice.model.User;
@@ -28,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @ActiveProfiles("test")
@@ -66,16 +66,33 @@ class IssueControllerTest {
 
     @Test
     void getIssues() throws Exception {
+        GetIssuesDto dto = GetIssuesDto.builder().username("user").build();
         getIssue("user");
         mvc.perform(
-                get("/api/v1/issue")
+                post("/api/v1/issue")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto))
         ).andExpect(MockMvcResultMatchers.status().isOk());
-        Mockito.verify(issueService, Mockito.times(1)).findAll();
+        Mockito.verify(issueService, Mockito.times(1)).findAll(Mockito.any());
+    }
+
+    @Test
+    void getIssues_UserDoesntExist_ThrowsException() throws Exception {
+        GetIssuesDto dto = GetIssuesDto.builder().username("user1").build();
+        getIssue("user");
+        mvc.perform(
+                post("/api/v1/issue")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 
     @Test
     void getById_IssueDoesntExist_ThrowsException() throws Exception {
-        GetIssueByIdDto dto = GetIssueByIdDto.builder().issueId(1L).build();
+        GetIssueByIdDto dto = GetIssueByIdDto.builder()
+                .issueId(1L)
+                .username("user")
+                .build();
 
         mvc.perform(
                 post("/api/v1/issue/getById")
@@ -85,16 +102,36 @@ class IssueControllerTest {
     }
 
     @Test
-    void getById_IssueExists_ServiceCalled() throws Exception {
+    void getById_UserDoesntExist_ThrowsException() throws Exception {
+        Issue issue = getIssue("user");
+
+        GetIssueByIdDto dto = GetIssueByIdDto.builder()
+                .issueId(issue.getId())
+                .username("user1")
+                .build();
+
+        mvc.perform(
+                post("/api/v1/issue/getById")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    void getById_CorrectData_ServiceCalled() throws Exception {
         Issue issue = getIssue("user");
         Mockito.doReturn(Optional.of(issue)).when(issueService).findById(issue.getId());
-        GetIssueByIdDto dto = GetIssueByIdDto.builder().issueId(issue.getId()).build();
+        GetIssueByIdDto dto = GetIssueByIdDto
+                .builder()
+                .issueId(issue.getId())
+                .username("user")
+                .build();
         mvc.perform(
                 post("/api/v1/issue/getById")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto))
         ).andExpect(MockMvcResultMatchers.status().isOk());
-        Mockito.verify(issueService, Mockito.times(1)).findById(Mockito.anyLong());
+        Mockito.verify(issueService, Mockito.times(1)).findById((GetIssueByIdDto) Mockito.any());
     }
 
     @Test

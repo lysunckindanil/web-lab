@@ -41,12 +41,12 @@ class UserServiceTest {
     }
 
     @Test
-    void loadUserByUsername() {
+    void findByUsername() {
         User user = new User();
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("password"));
         userRepository.save(user);
-        UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
+        UserDetails userDetails = userService.findByUsername(user.getUsername());
         assertNotNull(userDetails);
         Assertions.assertTrue(userDetails.isEnabled());
     }

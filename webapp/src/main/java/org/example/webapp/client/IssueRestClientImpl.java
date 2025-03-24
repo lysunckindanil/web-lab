@@ -2,10 +2,7 @@ package org.example.webapp.client;
 
 
 import lombok.RequiredArgsConstructor;
-import org.example.webapp.dto.forum.issue.CreateIssueApiDto;
-import org.example.webapp.dto.forum.issue.DeleteIssueApiDto;
-import org.example.webapp.dto.forum.issue.GetIssueByIdApiDto;
-import org.example.webapp.dto.forum.issue.IssueDto;
+import org.example.webapp.dto.forum.issue.*;
 import org.example.webapp.util.BadRequestException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -22,12 +19,18 @@ public class IssueRestClientImpl implements IssueRestClient {
     };
 
     @Override
-    public List<IssueDto> getIssues() {
-        return restClient
-                .get()
-                .uri("")
-                .retrieve()
-                .body(ISSUE_LIST_TYPE);
+    public List<IssueDto> getIssues(GetIssuesApiDto dto) {
+        try {
+            return restClient
+                    .post()
+                    .uri("")
+                    .body(dto)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .body(ISSUE_LIST_TYPE);
+        } catch (HttpClientErrorException.BadRequest exception) {
+            throw new BadRequestException(extractError(exception));
+        }
     }
 
     @Override

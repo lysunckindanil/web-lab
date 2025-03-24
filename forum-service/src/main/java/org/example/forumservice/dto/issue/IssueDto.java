@@ -22,4 +22,5 @@ public class IssueDto implements Serializable {
     private final String description;
     private final LocalDateTime createdAt;
     private final String authorUsername;
+    private final Boolean canDelete;
 }

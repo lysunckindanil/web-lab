@@ -2,6 +2,8 @@ package org.example.forumservice.service;
 
 import org.example.forumservice.dto.issue.CreateIssueDto;
 import org.example.forumservice.dto.issue.DeleteIssueDto;
+import org.example.forumservice.dto.issue.GetIssueByIdDto;
+import org.example.forumservice.dto.issue.GetIssuesDto;
 import org.example.forumservice.model.Issue;
 import org.example.forumservice.model.Role;
 import org.example.forumservice.model.User;
@@ -82,16 +84,78 @@ class IssueServiceTest {
     }
 
     @Test
+    void findById_CanDeleteOnlyAuthor() {
+        Issue issue_user = getIssue("user");
+        Issue issue_admin = getIssue("admin");
+        Assertions.assertTrue(issueService.findById(
+                GetIssueByIdDto.builder()
+                        .username("user")
+                        .issueId(issue_user.getId()).build()
+        ).getCanDelete());
+        Assertions.assertFalse(issueService.findById(
+                GetIssueByIdDto.builder()
+                        .username("user")
+                        .issueId(issue_admin.getId()).build()
+        ).getCanDelete());
+    }
+
+    @Test
+    void findById_RedactorCanDeleteEverything() {
+        Issue issue_user = getIssue("user");
+        Issue issue_admin = getIssue("admin");
+        Assertions.assertTrue(issueService.findById(
+                GetIssueByIdDto.builder()
+                        .username("admin")
+                        .issueId(issue_user.getId()).build()
+        ).getCanDelete());
+        Assertions.assertTrue(issueService.findById(
+                GetIssueByIdDto.builder()
+                        .username("admin")
+                        .issueId(issue_admin.getId()).build()
+        ).getCanDelete());
+    }
+
+
+    @Test
     void findAll() {
+        GetIssuesDto dto = GetIssuesDto.builder().username("user").build();
         getIssue("user");
-        Assertions.assertEquals(1, issueService.findAll().size());
+        Assertions.assertEquals(1, issueService.findAll(dto).size());
+    }
+
+    @Test
+    void findAll_CanDeleteOnlyAuthor() {
+        GetIssuesDto dto = GetIssuesDto.builder().username("user").build();
+        getIssue("user");
+        getIssue("admin");
+        Assertions.assertEquals(2, issueService.findAll(dto).size());
+        issueService.findAll(dto).forEach(
+                issue -> {
+                    if (issue.getAuthorUsername().equals("admin"))
+                        Assertions.assertFalse(issue.getCanDelete());
+                    else
+                        Assertions.assertTrue(issue.getCanDelete());
+                }
+        );
+    }
+
+    @Test
+    void findAll_RedactorCanDeleteAll() {
+        GetIssuesDto dto = GetIssuesDto.builder().username("admin").build();
+        getIssue("user");
+        getIssue("admin");
+        Assertions.assertEquals(2, issueService.findAll(dto).size());
+        issueService.findAll(dto).forEach(
+                issue -> Assertions.assertTrue(issue.getCanDelete())
+        );
     }
 
 
     @Test
     void create_CorrectData_Creates() {
+        GetIssuesDto dto = GetIssuesDto.builder().username("user").build();
         issueService.create(CreateIssueDto.builder().author("user").title("title").description("description").build());
-        Assertions.assertEquals(1, issueService.findAll().size());
+        Assertions.assertEquals(1, issueService.findAll(dto).size());
     }
 
 

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import org.example.forumservice.model.Comment;
 import org.example.forumservice.util.issue.IssueExists;
 import org.example.forumservice.util.user.UserExists;
@@ -15,9 +16,10 @@ import java.io.Serializable;
  * DTO for {@link Comment}
  */
 
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
-@Getter
 public class CreateCommentDto implements Serializable {
     @NotBlank(message = "Содержание комментария не должно быть пустым")
     private final String content;

@@ -85,7 +85,10 @@ class CommentControllerTest {
 
     @Test
     void getByIssue_IssueDoesntExist_ThrowsException() throws Exception {
-        GetCommentsByIssueDto dto = GetCommentsByIssueDto.builder().issueId(1L).build();
+        GetCommentsByIssueDto dto = GetCommentsByIssueDto.builder()
+                .issueId(1L)
+                .username("user")
+                .build();
         mvc.perform(
                 post("/api/v1/comment/getByIssue")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -94,9 +97,26 @@ class CommentControllerTest {
     }
 
     @Test
-    void getByIssue_IssueExists_ServiceCalled() throws Exception {
+    void getByIssue_UsernameDoesntExist_Throes() throws Exception {
+        GetCommentsByIssueDto dto = GetCommentsByIssueDto.builder()
+                .issueId(getIssue("user").getId())
+                .username("user1")
+                .build();
+        mvc.perform(
+                post("/api/v1/comment/getByIssue")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(dto))
+        ).andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    void getByIssue_CorrectData_ServiceCalled() throws Exception {
         Mockito.doReturn(new ArrayList<>()).when(commentService).getByIssue(Mockito.any());
-        GetCommentsByIssueDto dto = GetCommentsByIssueDto.builder().issueId(getIssue("user").getId()).build();
+        GetCommentsByIssueDto dto = GetCommentsByIssueDto.builder()
+                .issueId(getIssue("user").getId())
+                .username("user")
+                .build();
+
         mvc.perform(
                 post("/api/v1/comment/getByIssue")
                         .contentType(MediaType.APPLICATION_JSON)

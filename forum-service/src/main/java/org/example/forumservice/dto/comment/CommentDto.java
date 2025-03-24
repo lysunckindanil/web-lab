@@ -21,4 +21,5 @@ public class CommentDto implements Serializable {
     private final String content;
     private final LocalDateTime createdAt;
     private final String authorUsername;
+    private final Boolean canDelete;
 }

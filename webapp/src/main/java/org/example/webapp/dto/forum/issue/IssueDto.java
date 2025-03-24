@@ -1,6 +1,5 @@
 package org.example.webapp.dto.forum.issue;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,9 +16,7 @@ public class IssueDto implements Serializable {
     private String description;
     private LocalDateTime createdAt;
     private String authorUsername;
-
-    @JsonIgnore
-    private boolean canDelete;
+    private Boolean canDelete;
 
     public String getCreatedAtFormatted() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy");
