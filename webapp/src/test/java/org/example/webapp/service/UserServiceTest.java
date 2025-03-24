@@ -17,8 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -46,9 +47,9 @@ class UserServiceTest {
         user.setUsername("user");
         user.setPassword(passwordEncoder.encode("password"));
         userRepository.save(user);
-        UserDetails userDetails = userService.findByUsername(user.getUsername());
-        assertNotNull(userDetails);
-        Assertions.assertTrue(userDetails.isEnabled());
+        Optional<User> userOptional = userService.findByUsername(user.getUsername());
+        assertTrue(userOptional.isPresent());
+        assertEquals(user.getUsername(), userOptional.get().getUsername());
     }
 
     @Test

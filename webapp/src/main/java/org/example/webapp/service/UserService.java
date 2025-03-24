@@ -6,14 +6,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface UserService{
+public interface UserService {
     List<User> findAll();
 
-    @Transactional
     void register(UserDto dto);
 
-    User findByUsername(String username) throws UsernameNotFoundException;
+    Optional<User> findByUsername(String username);
 
     void grantAuthority(String authority, String username);
 

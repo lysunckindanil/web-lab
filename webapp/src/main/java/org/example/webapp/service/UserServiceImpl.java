@@ -5,7 +5,6 @@ import org.example.webapp.dto.UserDto;
 import org.example.webapp.model.User;
 import org.example.webapp.repo.RoleRepository;
 import org.example.webapp.repo.UserRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +26,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> userOptional = userRepository.getByUsername(username);
-        if (userOptional.isEmpty()) throw new UsernameNotFoundException(username);
-        return userOptional.get();
+    public Optional<User> findByUsername(String username){
+        return userRepository.getByUsername(username);
     }
 
     @Transactional
@@ -43,6 +40,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void grantAuthority(String authority, String username) {
         Optional<User> userOptional = userRepository.getByUsername(username);
@@ -53,6 +51,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Transactional
     @Override
     public void revokeAuthority(String authority, String username) {
         Optional<User> userOptional = userRepository.getByUsername(username);

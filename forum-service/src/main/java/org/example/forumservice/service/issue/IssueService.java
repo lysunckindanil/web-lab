@@ -10,9 +10,7 @@ public interface IssueService {
 
     List<IssueDto> findAll(GetIssuesDto dto);
 
-    @Transactional
     void create(CreateIssueDto dto);
 
-    @Transactional
     void delete(DeleteIssueDto dto);
 }
