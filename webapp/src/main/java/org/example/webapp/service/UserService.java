@@ -2,8 +2,6 @@ package org.example.webapp.service;
 
 import org.example.webapp.dto.UserDto;
 import org.example.webapp.model.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

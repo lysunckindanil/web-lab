@@ -1,6 +1,5 @@
 package org.example.webapp.config;
 
-import lombok.extern.slf4j.Slf4j;
 import org.example.webapp.model.User;
 import org.example.webapp.repo.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.Optional;
 
-@Slf4j
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {

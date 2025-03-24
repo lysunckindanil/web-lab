@@ -1,7 +1,6 @@
 package org.example.forumservice.service.issue;
 
 import org.example.forumservice.dto.issue.*;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
