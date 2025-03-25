@@ -1,20 +1,23 @@
 h1 {
-  font-size: 70px;
+    font-size: 2rem;
 }
 
 *,
 h1,
 h5 {
-  font-family: cursive;
+    font-family: cursive;
 }
 
-img {
-  border-radius: 50px;
-  border: 2px solid black;
+
+.card img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 0;
 }
+
 
 body {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10+ */
-  user-select: none; /* Standard syntax */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */
 }

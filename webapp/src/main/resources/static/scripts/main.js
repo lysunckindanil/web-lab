@@ -1,5 +1,6 @@
 function deleteIssue(issueId) {
     let token = $("meta[name='_csrf']").attr("content");
+    alert(issueId)
     $.ajax({
         url: '/forum/issue/delete',
         headers: {'X-CSRF-TOKEN': token},
