@@ -42,7 +42,7 @@
 
     # insert user3
     INSERT INTO users (id, username, password)
-    SELECT 12,'user3', '$2a$10$rgOVlIFwz8ig6KXWRcdNHeywm/qo2HSd1TFFtgNH/9Ucd/yEqRo/y'
+    SELECT 12,'user12', '$2a$10$rgOVlIFwz8ig6KXWRcdNHeywm/qo2HSd1TFFtgNH/9Ucd/yEqRo/y'
     FROM DUAL
     WHERE NOT EXISTS (SELECT 1 FROM users WHERE username = 'user12');
 
