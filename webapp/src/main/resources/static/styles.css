@@ -1,0 +1,20 @@
+h1 {
+  font-size: 70px;
+}
+
+*,
+h1,
+h5 {
+  font-family: cursive;
+}
+
+img {
+  border-radius: 50px;
+  border: 2px solid black;
+}
+
+body {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Standard syntax */
+}

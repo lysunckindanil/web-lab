@@ -3,19 +3,43 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link href="styles/styles.css" rel="stylesheet"/>
-    <link rel="icon" href="icon/favicon.ico" type="image/x-icon"/>
-    <title>Главная</title>
+    <title>Home</title>
+
     <meta
             name="description"
-            content="Дизайн и брендинг.
-      Маркетинг и коммуникации.
-      Цифровой маркетинг.
-      Творческий подход.
-      Ориентация на результат.
-      Индивидуальный подход.
-      Прозрачная коммуникация."
+            content="Photostudio72 – это команда профессиональных фотографов, страстно увлеченных своим делом. Photostudio72 предлагает широкий спектр фотоуслуг, чтобы удовлетворить потребности каждого клиента: Свадебная фотография, Семейные фотосессии, Портретная фотография, Рекламная фотография, Фотография событий."
     />
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+    />
+
+    <link
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap"
+            rel="stylesheet"
+    />
+
+    <link
+            href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap"
+            rel="stylesheet"
+    />
+
+    <link
+            href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap"
+            rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="bootstrap-footer-02/fonts/icomoon/style.css"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap-footer-02/css/bootstrap.min.css"/>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="bootstrap-footer-02/css/style.css"/>
+
+    <link href="/styles.css" rel="stylesheet"/>
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
@@ -44,7 +68,7 @@
             "ym"
         );
 
-        ym(99192957, "init", {
+        ym(99199113, "init", {
             clickmap: true,
             trackLinks: true,
             accurateTrackBounce: true,
@@ -55,16 +79,18 @@
     >
         <div>
             <img
-                    src="https://mc.yandex.ru/watch/99192957"
+                    src="https://mc.yandex.ru/watch/99199113"
                     style="position: absolute; left: -9999px"
                     alt=""
             /></div
         >
     </noscript>
+    <!-- /Yandex.Metrika counter -->
+
     <!-- Google tag (gtag.js) -->
     <script
             async
-            src="https://www.googletagmanager.com/gtag/js?id=G-N0GHYE5D4D"
+            src="https://www.googletagmanager.com/gtag/js?id=G-EXJJFWX9FJ"
     ></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -75,108 +101,183 @@
 
         gtag("js", new Date());
 
-        gtag("config", "G-N0GHYE5D4D");
+        gtag("config", "G-EXJJFWX9FJ");
     </script>
 </head>
-
 <body>
-<header class="header">
-    <div>
-        <img class="logo-icon" src="icon/logo.png" alt="logo"/>
-        <h1>Вихрь Идей</h1>
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+        <div
+                class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+        >
+            <ul
+                    class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+            >
+                <li>
+                    <a href="index.html" class="nav-link px-2 text-secondary">Главная</a>
+                </li>
+                <li>
+                    <a href="experts.html" class="nav-link px-2 text-white"
+                    >Эксперты</a
+                    >
+                </li>
+                <li>
+                    <a href="order.html" class="nav-link px-2 text-white">Заказ</a>
+                </li>
+                <li>
+                    <a href="/forum" class="nav-link px-2 text-white">Форум</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <nav>
-        <ul>
-            <li><a href="news.html">Новости</a></li>
-            <li><a href="contacts.html">Контакты</a></li>
-            <li><a href="/forum">Форум</a></li>
-        </ul>
-    </nav>
 </header>
 
-<main>
-    <article>
-        <h2>О нас</h2>
-        <p>
-            Вихрь Идей - это творческая мастерская, где рождаются нестандартные
-            решения для вашего бизнеса. Мы не боимся экспериментировать и искать
-            новые горизонты, чтобы создавать проекты, которые не просто отвечают
-            вашим задачам, а превосходят ваши ожидания.
-        </p>
-        <p>
-            Вихрь Идей – это не просто команда креативщиков, это сплоченный
-            коллектив профессионалов, включающий в себя опытных дизайнеров,
-            маркетологов, копирайтеров и разработчиков программного обеспечения.
-            Наш опыт охватывает широкий спектр отраслей, от высоких технологий до
-            производства продуктов питания. Мы гордимся портфолио, включающим в
-            себя разработку бренд-буков для стартапов, создание вирусных рекламных
-            кампаний для крупных корпораций и разработку уникальных веб-сайтов с
-            инновационными решениями в области UX/UI.
-        </p>
-        <img src="images/main_page.jpg" alt="main page photo"/>
+<article>
+    <div class="row justify-content-center my-5">
+        <div class="col-11 col-md-8">
+            <h1 class="mb-4">Компания обработки фото</h1>
 
-        <p>
-            Мы верим в силу коллаборации и тесно сотрудничаем с каждым клиентом на
-            всех этапах проекта, от начальной концепции до финальной реализации.
-            Наша методология построена на принципах гибкой разработки (Agile), что
-            позволяет нам оперативно реагировать на изменения и гарантирует
-            прозрачность процесса для наших клиентов. Регулярные отчеты, открытое
-            общение и совместное принятие решений – это неотъемлемая часть нашей
-            работы.
-        </p>
-        <p>
-            Кроме того, Вихрь Идей активно участвует в развитии творческого
-            сообщества. Мы регулярно проводим воркшопы и мастер-классы, делясь
-            нашим опытом и знаниями с начинающими специалистами. Мы также являемся
-            партнерами ряда благотворительных организаций, и часть нашей прибыли
-            направляется на поддержку социальных проектов. Наша цель – не только
-            создавать успешные проекты для бизнеса, но и вносить положительные
-            изменения в мир вокруг нас. Свяжитесь с нами, и мы поможем вашему
-            бизнесу взлететь на новые высоты!
-        </p>
-    </article>
+            <img
+                    class="ms-5"
+                    src="images/logo.png"
+                    style="float: right; width: 40%"
+            />
+            <p>
+                Фотография – это больше, чем просто снимки. Это искусство, которое
+                запечатлевает моменты, эмоции и истории. Photostudio72 – это команда
+                профессиональных фотографов, страстно увлеченных своим делом. Мы
+                верим, что каждая фотография – это произведение искусства, способное
+                пробудить чувства и оставить след в вашей памяти. Photostudio72
+                предлагает широкий спектр фотоуслуг, чтобы удовлетворить потребности
+                каждого клиента: Свадебная фотография, Семейные фотосессии,
+                Портретная фотография, Рекламная фотография, Фотография событий.
+                Photostudio72 отличает: Профессионализм и опыт, Индивидуальный
+                подход, Современное оборудование, Приятная атмосфера. Photostudio72
+                – это не просто фотограф, а историк ваших самых важных моментов.
+                Доверьте нам запечатлеть ваши самые яркие эмоции и воспоминания, и
+                мы создадим для вас настоящие произведения искусства!
+            </p>
 
-    <aside class="aside">
-        <div>
-            <h2>Наши услуги</h2>
-            <ul>
-                <li>Дизайн и брендинг</li>
-                <li>Маркетинг и коммуникации</li>
-                <li>Цифровой маркетинг</li>
-            </ul>
+            <p>
+                Фотография – это больше, чем просто снимки. Это искусство, которое
+                запечатлевает моменты, эмоции и истории. Photostudio72 – это команда
+                профессиональных фотографов, страстно увлеченных своим делом. Мы
+                верим, что каждая фотография – это произведение искусства, способное
+                пробудить чувства и оставить след в вашей памяти. Photostudio72
+                предлагает широкий спектр фотоуслуг, чтобы удовлетворить потребности
+                каждого клиента: Свадебная фотография, Семейные фотосессии,
+                Портретная фотография, Рекламная фотография, Фотография событий.
+                Photostudio72 отличает: Профессионализм и опыт, Индивидуальный
+                подход, Современное оборудование, Приятная атмосфера. Photostudio72
+                – это не просто фотограф, а историк ваших самых важных моментов.
+                Доверьте нам запечатлеть ваши самые яркие эмоции и воспоминания, и
+                мы создадим для вас настоящие произведения искусства!
+            </p>
+            <h1>Наша команда</h1>
+            <img src="images/employee.jpg" style="width: 90%; margin-left: 5%"/>
         </div>
-        <div>
-            <h2>Наши принципы</h2>
-            <ul>
-                <li>Творческий подход</li>
-                <li>Ориентация на результат</li>
-                <li>Индивидуальный подход</li>
-                <li>Прозрачная коммуникация</li>
-            </ul>
-        </div>
-    </aside>
-</main>
+    </div>
+</article>
 
-<footer class="footer">
-    <p>
-        &copy; 2025 [Лысункин Данила/Вихрь идей]. Все права защищены.
-        Несанкционированное копирование, распространение или использование
-        материалов с этого сайта запрещено.
-    </p>
-    <!-- Yandex.Metrika informer -->
-    <a
-            href="https://metrika.yandex.ru/stat/?id=99192957&amp;from=informer"
-            target="_blank"
-            rel="nofollow"
-    ><img
-            src="https://informer.yandex.ru/informer/99192957/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
-            style="width: 88px; height: 31px; border: 0"
-            alt="Яндекс.Метрика"
-            title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)"
-            class="ym-advanced-informer"
-            data-cid="99192957"
-            data-lang="ru"
-    /></a>
+<footer class="footer-32892 pb-0">
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md pr-md-5 mb-4 mb-md-0">
+                    <h3>About Us</h3>
+                    <p class="mb-4">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        Laboriosam itaque unde facere repellendus, odio et iste
+                        voluptatum aspernatur ratione mollitia tempora eligendi maxime
+                        est, blanditiis accusamus. Incidunt, aut, quis!
+                    </p>
+                </div>
+                <div class="col-md mb-4 mb-md-0">
+                    <h3>Latest Tweet</h3>
+                    <ul class="list-unstyled tweets">
+                        <li class="d-flex">
+                            <div class="mr-4">
+                                <span class="icon icon-twitter"></span>
+                            </div>
+                            <div>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Facere unde omnis veniam porro excepturi.
+                            </div>
+                        </li>
+                        <li class="d-flex">
+                            <div class="mr-4">
+                                <span class="icon icon-twitter"></span>
+                            </div>
+                            <div>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Facere unde omnis veniam porro excepturi.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <div class="row gallery">
+                        <div class="col-6">
+                            <a href="#"
+                            ><img
+                                    src="bootstrap-footer-02/images/img_1.jpg"
+                                    alt="Image"
+                                    class="img-fluid"
+                            /></a>
+                        </div>
+                        <div class="col-6">
+                            <a href="#"
+                            ><img
+                                    src="bootstrap-footer-02/images/img_3.jpg"
+                                    alt="Image"
+                                    class="img-fluid"
+                            /></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="py-5 footer-menu-wrap d-md-flex align-items-center">
+                        <ul class="list-unstyled footer-menu mr-auto">
+                            <li><a href="index.html">Главная</a></li>
+                            <li><a href="experts.html">Эксперты</a></li>
+                            <li><a href="order.html">Заказ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <p>
+                    &copy; 2024 [Илья Токарев/Photostudio72]. Все права защищены.
+                    Несанкционированное копирование, распространение или использование
+                    материалов с этого сайта запрещено.
+                </p>
+                <!-- Yandex.Metrika informer -->
+                <a
+                        href="https://metrika.yandex.ru/stat/?id=99199113&amp;from=informer"
+                        target="_blank"
+                        rel="nofollow"
+                ><img
+                        src="https://informer.yandex.ru/informer/99199113/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
+                        style="width: 88px; height: 31px; border: 0"
+                        alt="Яндекс.Метрика"
+                        title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)"
+                        class="ym-advanced-informer"
+                        data-cid="99199113"
+                        data-lang="ru"
+                /></a>
+                <!-- /Yandex.Metrika informer -->
+            </div>
+        </div>
+    </div>
 </footer>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"
+></script>
 </body>
 </html>

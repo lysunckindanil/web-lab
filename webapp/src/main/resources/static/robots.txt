@@ -12,4 +12,4 @@ Disallow: /
 Allow: /index.html
 Allow: /news.html
 
-Sitemap: http://ideas-flight.web-prj.ru/sitemap.xml
+Sitemap: http://photostudio72.web-prj.ru/sitemap.xml
