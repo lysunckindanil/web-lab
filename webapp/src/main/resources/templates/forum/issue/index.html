@@ -68,7 +68,7 @@
                 <p th:text="${issue.getDescription()}">description</p>
                 <p>Опубликовано <span th:text="${issue.getCreatedAtFormatted()}"></span></p>
                 <p>Автор: <span th:text="${issue.getAuthorUsername()}"></span></p>
-                <button class="danger"
+                <button class="btn btn-danger"
                         th:if="${issue.getCanDelete()}"
                         th:value="${issue.getId()}"
                         onclick="deleteIssueIndex(this.value)">Удалить
