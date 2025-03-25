@@ -1,5 +1,3 @@
-# noinspection SqlWithoutWhereForFile
-
 INSERT INTO roles (name)
 SELECT 'ROLE_USER'
 FROM DUAL
