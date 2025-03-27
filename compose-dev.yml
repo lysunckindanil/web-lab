@@ -10,7 +10,7 @@ services:
       MYSQL_USER: gen_user
       MYSQL_PASSWORD: 1234
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
+    image: phpmyadmin/phpmyadmin:5.2.2-fpm-alpine
     restart: always
     ports:
       - "8080:80"
