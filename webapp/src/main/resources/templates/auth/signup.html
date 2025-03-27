@@ -9,8 +9,6 @@
 <div class="content">
     <form class="login-form" th:method="post" th:action="@{/signup}" th:object="${user}">
         <h2>Регистрация</h2>
-        <p style="color: green" th:if="${success}">Успешная регистрация</p>
-
         <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
         <p>
             <label for="username" class="screenreader">Логин</label>
