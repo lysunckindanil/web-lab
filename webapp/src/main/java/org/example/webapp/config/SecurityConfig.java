@@ -30,7 +30,7 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
                         .failureUrl("/login?error")
-                        .defaultSuccessUrl("/index.html"))
+                        .defaultSuccessUrl("/forum"))
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/"));

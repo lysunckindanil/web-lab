@@ -28,13 +28,11 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, Model model) {
+    public String signup(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors())
             return "auth/signup";
 
         userService.register(userDto);
-        model.addAttribute("success", true);
-        model.addAttribute("user", UserDto.builder().build());
-        return "auth/signup";
+        return "forward:/login";
     }
 }

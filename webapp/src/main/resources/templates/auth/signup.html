@@ -294,8 +294,6 @@
             <h1 class="opacity">Регистрация</h1>
             <form th:method="post" th:action="@{/signup}" th:object="${user}">
 
-                <p style="color: green" th:if="${success}">Успешная регистрация</p>
-
                 <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
                 <input type="text" name="username" th:field="*{username}" placeholder="Имя"/>
 
