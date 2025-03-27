@@ -9,7 +9,7 @@ services:
       MYSQL_PASSWORD: mrcucumber1337
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.2.2-fpm-alpine
+    image: phpmyadmin/phpmyadmin:latest
     restart: always
     ports:
       - "8080:80"
