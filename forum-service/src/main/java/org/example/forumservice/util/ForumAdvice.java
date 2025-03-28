@@ -21,14 +21,14 @@ public class ForumAdvice {
 
     @ExceptionHandler({BadRequestException.class})
     public ResponseEntity<?> handleBadRequestException(BadRequestException e) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, BadRequestException.class.getName());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation exception. Please check provided data.");
         problemDetail.setProperty("error", e.getMessage());
         return ResponseEntity.badRequest().body(problemDetail);
     }
 
     @ExceptionHandler({HttpMessageConversionException.class})
     public ResponseEntity<?> handleHttpMessageConversionException() {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, HttpMessageConversionException.class.getName());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "JSON parsing exception. Please check provided data.");
         problemDetail.setProperty("error", "JSON parsing error");
         return ResponseEntity.badRequest().body(problemDetail);
     }
