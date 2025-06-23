@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - include:
+      file: changes/01_create_tables.yaml
+      relativeToChangelogFile: true
+
+  - include:
+      file: changes/02_insert_initial_data.yaml
+      relativeToChangelogFile: true

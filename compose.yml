@@ -19,20 +19,22 @@ services:
 
   forum-service:
     image:
-      docker.io/library/forum-service:0.0.1-SNAPSHOT
+      docker.io/library/forum-service:1.0-SNAPSHOT
     restart: always
     environment:
+      SPRING_PROFILES_ACTIVE: prod
       MYSQL_DATABASE: webapp_db
       MYSQL_USER: gen_user
       MYSQL_PASSWORD: liljeep
 
   webapp:
     image:
-      docker.io/library/webapp:0.0.1-SNAPSHOT
+      docker.io/library/webapp:1.0-SNAPSHOT
     restart: always
     ports:
       - "80:80"
     environment:
+      SPRING_PROFILES_ACTIVE: prod
       MYSQL_DATABASE: webapp_db
       MYSQL_USER: gen_user
       MYSQL_PASSWORD: liljeep

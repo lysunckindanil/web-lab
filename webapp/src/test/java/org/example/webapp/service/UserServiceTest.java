@@ -37,6 +37,9 @@ class UserServiceTest {
 
     @BeforeAll
     public void setUp() {
+        userRepository.deleteAll();
+        roleRepository.deleteAll();
+
         roleRepository.save(new Role("ROLE_USER"));
     }
 
