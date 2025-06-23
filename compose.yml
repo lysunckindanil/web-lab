@@ -3,38 +3,40 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: mrcucumber1337
-      MYSQL_DATABASE: web_lab_db
-      MYSQL_USER: tokarev
-      MYSQL_PASSWORD: mrcucumber1337
+      MYSQL_ROOT_PASSWORD: liljeep
+      MYSQL_DATABASE: webapp_db
+      MYSQL_USER: gen_user
+      MYSQL_PASSWORD: liljeep
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     ports:
-      - "8080:80"
+      - "8081:80"
     environment:
       PMA_HOST: mysql
-      MYSQL_ROOT_PASSWORD: mrcucumber1337
+      MYSQL_ROOT_PASSWORD: liljeep
 
   forum-service:
     image:
-      docker.io/library/forum-service:0.0.1-SNAPSHOT
+      docker.io/library/forum-service:1.0-SNAPSHOT
     restart: always
     environment:
-      MYSQL_DATABASE: web_lab_db
-      MYSQL_USER: tokarev
-      MYSQL_PASSWORD: mrcucumber1337
+      SPRING_PROFILES_ACTIVE: prod
+      MYSQL_DATABASE: webapp_db
+      MYSQL_USER: gen_user
+      MYSQL_PASSWORD: liljeep
 
   webapp:
     image:
-      docker.io/library/webapp:0.0.1-SNAPSHOT
+      docker.io/library/webapp:1.0-SNAPSHOT
     restart: always
     ports:
       - "80:80"
     environment:
-      MYSQL_DATABASE: web_lab_db
-      MYSQL_USER: tokarev
-      MYSQL_PASSWORD: mrcucumber1337
+      SPRING_PROFILES_ACTIVE: prod
+      MYSQL_DATABASE: webapp_db
+      MYSQL_USER: gen_user
+      MYSQL_PASSWORD: liljeep
 
 
