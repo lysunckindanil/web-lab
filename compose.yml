@@ -5,7 +5,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: habibi_secret
       MYSQL_DATABASE: webapp_db
-      MYSQL_USER: gen_user
+      MYSQL_USER: admin_user
       MYSQL_PASSWORD: habibi_secret
 
   phpmyadmin:
@@ -24,7 +24,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       MYSQL_DATABASE: webapp_db
-      MYSQL_USER: gen_user
+      MYSQL_USER: admin_user
       MYSQL_PASSWORD: habibi_secret
 
   webapp:
@@ -36,7 +36,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       MYSQL_DATABASE: webapp_db
-      MYSQL_USER: gen_user
+      MYSQL_USER: admin_user
       MYSQL_PASSWORD: habibi_secret
 
 
