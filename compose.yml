@@ -19,7 +19,7 @@ services:
 
   forum-service:
     image:
-      docker.io/library/forum-service:1.0-SNAPSHOT
+      ilya859/forum-service:1.0-SNAPSHOT
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
@@ -29,7 +29,7 @@ services:
 
   webapp:
     image:
-      docker.io/library/webapp:1.0-SNAPSHOT
+      ilya859/webapp:1.0-SNAPSHOT
     restart: always
     ports:
       - "80:80"
