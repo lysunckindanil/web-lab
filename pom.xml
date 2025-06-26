@@ -20,6 +20,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mockito.version>5.16.1</mockito.version>
+        <docker.repository>forumapp</docker.repository>
     </properties>
 
     <dependencies>
@@ -58,6 +59,11 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.4.4</version>
                 <configuration>
+                    <image>
+                        <name>
+                            docker.io/${docker.repository}/${project.artifactId}:${project.version}
+                        </name>
+                    </image>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>

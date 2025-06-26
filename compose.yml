@@ -4,7 +4,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: liljeep
-      MYSQL_DATABASE: webapp_db
+      MYSQL_DATABASE: forumapp_db
       MYSQL_USER: gen_user
       MYSQL_PASSWORD: liljeep
 
@@ -12,31 +12,54 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     ports:
-      - "8081:80"
+      - "8080:80"
     environment:
       PMA_HOST: mysql
       MYSQL_ROOT_PASSWORD: liljeep
 
   forum-service:
     image:
-      docker.io/library/forum-service:1.0-SNAPSHOT
+      81911fa5-polite-trinculo.registry.twcstorage.ru/forumapp/forum-service
     restart: always
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      MYSQL_DATABASE: webapp_db
+      MYSQL_DATABASE: forumapp_db
       MYSQL_USER: gen_user
       MYSQL_PASSWORD: liljeep
 
   webapp:
     image:
-      docker.io/library/webapp:1.0-SNAPSHOT
+      81911fa5-polite-trinculo.registry.twcstorage.ru/forumapp/webapp
     restart: always
     ports:
       - "80:80"
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      MYSQL_DATABASE: webapp_db
+      MYSQL_DATABASE: forumapp_db
       MYSQL_USER: gen_user
       MYSQL_PASSWORD: liljeep
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    depends_on:
+      - certbot
+
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: certbot
+    restart: always
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    entrypoint: sh -c "sleep 6 && certbot certonly --standalone --non-interactive --agree-tos --email danil.lysunckin@gmail.com -d lysunkindanila.ru --rsa-key-size 4096 --force-renewal"
 
 
